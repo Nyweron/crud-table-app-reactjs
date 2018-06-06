@@ -1,0 +1,33 @@
+{
+  "name": "crud-table-app-reactjs",
+  "version": "0.1.0",
+  "description": "Simply CRUD table with reactJS",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nyweron/crud-table-app-reactjs.git"
+  },
+  "keywords": [
+    "javascript",
+    "reactjs",
+    "jest",
+    "json-server"
+  ],
+  "author": "Przemysław Juśkiewicz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nyweron/crud-table-app-reactjs/issues"
+  },
+  "homepage": "https://github.com/Nyweron/crud-table-app-reactjs#readme",
+  "private": true,
+  "dependencies": {
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "react-scripts": "1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
