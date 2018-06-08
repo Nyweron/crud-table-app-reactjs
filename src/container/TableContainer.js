@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { TableForm } from "../components/table/index";
 
-class FormContainer extends Component {
+class TableContainer extends Component {
   state = {
     id: "",
     name: "",
@@ -32,4 +32,4 @@ class FormContainer extends Component {
   }
 }
 
-export default FormContainer;
+export default TableContainer;
