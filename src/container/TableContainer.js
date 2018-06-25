@@ -11,6 +11,7 @@ class TableContainer extends Component {
   };
 
   componentDidMount() {
+    console.log("componentDidMount");
     getAll().then(persons => this.setState({ persons }));
   }
 
@@ -30,7 +31,7 @@ class TableContainer extends Component {
       <div>
         <TableForm
           handleSubmitAddRow={this.handleSubmitAddRow}
-          name={this.state.name}
+          persons={this.state.persons}
           handleChange={this.handleChange}
         />
       </div>

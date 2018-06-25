@@ -1,12 +1,13 @@
 import React from "react";
+import { TableRow } from "./TableRow";
 
 export const TableForm = props => (
   <form onSubmit={props.handleSubmitAddRow}>
-    <input type="text" value={props.name} onChange={props.handleChange} />
+      {/* For test. TODO remove this */}
+      <input type="text" value={props.name} onChange={props.handleChange} />
+      {/* END for test */}
 
     <div className="container">
-      <h2>Striped Rows</h2>
-      <p>The .table-striped className adds zebra-stripes to a table:</p>
       <table className="table table-striped table-bordered ">
         <thead>
           <tr>
@@ -18,22 +19,11 @@ export const TableForm = props => (
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>John</td>
-            <td>Doe</td>
-            <td>27</td>
-            <td>true</td>
-          </tr>
+          {props.persons.map(person => (
+            <TableRow key={person.id} {...person} />
+          ))}
           <tr>
             <td>2</td>
-            <td>John</td>
-            <td>Doe</td>
-            <td>27</td>
-            <td>true</td>
-          </tr>
-          <tr>
-            <td>3</td>
             <td>John</td>
             <td>Doe</td>
             <td>27</td>
