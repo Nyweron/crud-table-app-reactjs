@@ -1,12 +1,18 @@
 import React, { Component } from "react";
 import { TableForm } from "../components/table/index";
+import {getAll} from "../lib/personService";
 
 class TableContainer extends Component {
   state = {
     id: "",
     name: "",
-    price: ""
+    price: "",
+    persons: []
   };
+
+  componentDidMount() {
+    getAll().then(persons => this.setState({ persons }));
+  }
 
   handleSubmitAddRow = event => {
     event.preventDefault();
