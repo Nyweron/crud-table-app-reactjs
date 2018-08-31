@@ -12,7 +12,7 @@ class TableContainer extends Component {
 
   componentDidMount() {
     console.log("componentDidMount");
-    getAll().then(persons => this.setState({ persons }));
+    getAll().then(person => this.setState({ persons: person }));
   }
 
   handleSubmitAddRow = event => {
@@ -25,6 +25,7 @@ class TableContainer extends Component {
     console.log(event.target.value);
     this.setState({ name: event.target.value });
   };
+
 
   render() {
     return (

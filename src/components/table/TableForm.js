@@ -1,5 +1,6 @@
 import React from "react";
-import { TableRow } from "./TableRow";
+import PropTypes from "prop-types";
+import { TableListRows } from "./TableListRows";
 
 export const TableForm = props => (
   <form onSubmit={props.handleSubmitAddRow}>
@@ -19,8 +20,8 @@ export const TableForm = props => (
           </tr>
         </thead>
         <tbody>
-          {props.persons.map(person => (
-            <TableRow key={person.id} {...person} />
+         {props.persons.map(row=>(
+            <TableListRows rows={row}/>
           ))}
           <tr>
             <td>2</td>
@@ -34,3 +35,7 @@ export const TableForm = props => (
     </div>
   </form>
 );
+
+TableForm.propTypes = {
+  persons: PropTypes.array.isRequired
+};
