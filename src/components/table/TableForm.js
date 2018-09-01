@@ -11,28 +11,25 @@ export const TableForm = props => (
     {/* END for test */}
 
     <div className="container">
+    <TableListRows rows={props.persons} keys={props.keys}  />
       <table className="table table-striped table-bordered ">
         <thead>
-          {/* <tr>
-            <th>Id</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
-            <th>Age</th>
-            <th>Is actice</th>
-          </tr> */}
 
-          <TableKey keys={props.keys} />
+          {/* <TableKey keys={props.keys} />
           {props.keys.map(item => (
             <th>{item}</th>
-          ))}
+          ))} */}
         </thead>
         <tbody>
-          {props.persons.map(row => (
+          {/* {props.persons.map(row => (
             <TableListRows rows={row} />
           ))}
           {props.persons.map(person => (
             <TableRow key={person.id} {...person} />
-          ))}
+          ))} */}
+
+
+
 
         </tbody>
       </table>

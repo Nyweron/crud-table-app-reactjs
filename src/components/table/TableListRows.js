@@ -1,12 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TableRow } from './TableRow';
+import { TableKey } from './TableKey';
 
 export const TableListRows = props => {
-  return (
-    // {props.persons.map(person=>(
-        <TableRow key={props.rows.id} {...props.rows}/>
-    // ))}
+  return(
+    <table className="table table-striped table-bordered ">
+      <thead>
+        <TableKey keys={props.keys} />
+      </thead>
+      <tbody>
+        <TableRow rows={props.rows}/>
+      </tbody>
+    </table>
   );
 };
 
