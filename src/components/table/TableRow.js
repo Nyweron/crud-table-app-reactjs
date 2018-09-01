@@ -2,20 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export const TableRow = props => {
-  console.log("TableRow",props)
-  return (
-<div>
-{props.rows.map(row=>(
-    <tr>
-        <th>{row.id}</th>
-         <th>{row.firstName}</th>
-          <th>{row.lastName}</th>
-         <th>{row.age}</th>
-        <th>{row.isActive.toString()}</th>
-    </tr>
-        ))}
-    </div>
-  );
+  let rowsToReturn = [];
+  Object.keys(props).forEach(function(key,index) {
+    if(props[key] == true || props[key] == false){
+      rowsToReturn.push(<th>{props[key].toString()}</th>);
+    }else{
+      rowsToReturn.push(<th>{props[key]}</th>);
+    }
+  });
+
+  return <tr>{rowsToReturn}</tr>
 };
 
 TableRow.propTypes = {

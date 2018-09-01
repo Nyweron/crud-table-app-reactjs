@@ -31,7 +31,7 @@ class TableContainer extends Component {
       <div>
         <TableForm
           handleSubmitAddRow={this.handleSubmitAddRow}
-          persons={this.state.persons}
+          rows={this.state.persons}
           keys={this.state.keysFromDbJson}
           handleChange={this.handleChange}
         />
