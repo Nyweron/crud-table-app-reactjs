@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 import { TableForm } from "../components/table/index";
-import {getAll} from "../lib/personService";
+import { getAll, getKeyFromJson } from "../lib/personService";
 
 class TableContainer extends Component {
   state = {
-    id: "",
-    name: "",
-    price: "",
-    persons: []
+    persons: [],
+    keysFromDbJson: []
   };
 
   componentDidMount() {
     console.log("componentDidMount");
     getAll().then(person => this.setState({ persons: person }));
+    getKeyFromJson().then(key => this.setState({ keysFromDbJson: key }));
   }
 
   handleSubmitAddRow = event => {
@@ -26,13 +25,14 @@ class TableContainer extends Component {
     this.setState({ name: event.target.value });
   };
 
-
   render() {
+    console.log("this.state.keysFromDbJson", this.state.keysFromDbJson);
     return (
       <div>
         <TableForm
           handleSubmitAddRow={this.handleSubmitAddRow}
           persons={this.state.persons}
+          keys={this.state.keysFromDbJson}
           handleChange={this.handleChange}
         />
       </div>
