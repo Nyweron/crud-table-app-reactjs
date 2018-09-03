@@ -5,7 +5,7 @@ import { TableKey } from './TableKey';
 
 export const TableListRows = props => {
   return(
-    <table className="table table-striped table-bordered ">
+    <table className={props.classCss}>
       <thead>
         <TableKey keys={props.keys} />
       </thead>
