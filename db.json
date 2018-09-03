@@ -5,7 +5,8 @@
       "firstName": "Homer",
       "lastName": "Simpson",
       "age": 45,
-      "isActive":true
+      "isActive":true,
+      "Hobby":"drink beer"
     },
     {
       "id": 2,
@@ -19,7 +20,8 @@
       "firstName": "Bart",
       "lastName": "Simpson",
       "age": 15,
-      "isActive":true
+      "isActive":true,
+      "Hobby":"Makes homer angry"
     },
     {
       "id": 4,

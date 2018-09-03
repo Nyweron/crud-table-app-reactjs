@@ -6,7 +6,9 @@ export const TableRow = props => {
     return(
       <tr>
         {props.keys.map(function (key){
-          return <td>{row[key].toString()}</td>;
+          if(row[key] != undefined){
+            return <td>{row[key].toString()}</td>;
+          }
         })}
       </tr>
   );});

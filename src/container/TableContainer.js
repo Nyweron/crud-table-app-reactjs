@@ -4,13 +4,13 @@ import { getAll, getKeyFromJson } from "../lib/personService";
 
 class TableContainer extends Component {
   state = {
-    persons: [],
+    rowsFromDbJson: [],
     keysFromDbJson: []
   };
 
   componentDidMount() {
     console.log("componentDidMount");
-    getAll().then(person => this.setState({ persons: person }));
+    getAll().then(person => this.setState({ rowsFromDbJson: person }));
     getKeyFromJson().then(key => this.setState({ keysFromDbJson: key }));
   }
 
@@ -31,7 +31,7 @@ class TableContainer extends Component {
       <div>
         <TableForm
           handleSubmitAddRow={this.handleSubmitAddRow}
-          rows={this.state.persons}
+          rows={this.state.rowsFromDbJson}
           keys={this.state.keysFromDbJson}
           handleChange={this.handleChange}
         />
