@@ -13,6 +13,7 @@ export const TableRow = props => {
   //   </tr>
   // );
 
+
   let rowsToReturn = [];
   var keys=props.keys;
   var key = ["id", "firstName", "age", "lastName", "isActive"];
@@ -53,26 +54,22 @@ export const TableRow = props => {
       "isActive": true
     }
   ];
-  console.log("keys",keys)
-  console.log("props.rows",props.rows)
-  console.log("props.keys",props.keys)
 
   const keyLength = props.keys.length;
 
-  for(let i = 0; i < keyLength; i++){
-    rowsToReturn.push('<td>'); //<- this part should have <td>
-    for(let j = 0; j < keyLength; j++){
-      console.log("test",rows[i][key[j]]);
-      rowsToReturn.push(<th>{rows[i][key[j]].toString()}</th>)
-      if(j==4){
-        rowsToReturn.push(`\n`)
-        rowsToReturn.push('</tr>') //<- this part should cloase </td>
-      }
-    }
-  }
-console.log("rowsToReturn", rowsToReturn)
- // return <tr>{rowsToReturn}</tr>
-  return rowsToReturn
+  var x = rows.map(function(row) {
+        return(
+          <tr>
+            {keys.map(function (column){
+              return <td>{row[column].toString()}</td>;
+            })}
+          </tr>
+  )});
+
+  console.log("x",x)
+
+  return x
+
 };
 
 TableRow.propTypes = {
