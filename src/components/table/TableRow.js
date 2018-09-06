@@ -3,19 +3,22 @@ import PropTypes from "prop-types";
 
 export const TableRow = props => {
   let rowsToReturn = props.rows.map(function(row) {
-    return(
-      <tr>
-        {props.keys.map(function (key){
-          if(row[key] != undefined){
-            return <td>{row[key].toString()}</td>;
+    return (
+      <tr key={row.id}>
+        {props.keys.map(function(key, i) {
+          if (row[key] !== undefined) {
+            return <td key={row.id + "-" + i}>{row[key].toString()}</td>;
           }
+          return <td key={row.id + "-" + i}></td>
         })}
       </tr>
-  );});
+    );
+  });
 
-  return rowsToReturn
+  return rowsToReturn;
 };
 
 TableRow.propTypes = {
-  id: PropTypes.number.isRequired
+  rows: PropTypes.array.isRequired,
+  keys: PropTypes.array.isRequired
 };
