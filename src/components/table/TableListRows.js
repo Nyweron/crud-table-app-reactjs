@@ -17,5 +17,6 @@ export const TableListRows = props => {
 };
 
 TableListRows.propTypes = {
-  //persons: PropTypes.array.isRequired
-}
+  rows: PropTypes.array.isRequired,
+  keys: PropTypes.array.isRequired
+};
