@@ -5,7 +5,8 @@ import { getAll, getKeyFromJson } from "../lib/personService";
 class TableContainer extends Component {
   state = {
     rowsFromDbJson: [],
-    keysFromDbJson: []
+    keysFromDbJson: [],
+    sort:false
   };
 
   componentDidMount() {
@@ -17,16 +18,16 @@ class TableContainer extends Component {
   handleSubmitAddRow = event => {
     event.preventDefault();
     console.log("handleSubmitAddRow");
-    console.log("this.state", this.state);
   };
 
   handleChange = event => {
-    console.log(event.target.value);
-    this.setState({ name: event.target.value });
+    console.log(event.target);
+   // console.log(event.target.value);
+    this.setState({ sort: true });
+    console.log("sort",this.sort);
   };
 
   render() {
-    console.log("this.state.keysFromDbJson", this.state.keysFromDbJson);
     return (
       <div>
         <TableForm

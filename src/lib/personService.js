@@ -6,9 +6,7 @@ export const getAll = () => {
 
 export const getKeyFromJson = () => {
   let obj = getAll().then(function(res){
-      console.log(res);
       let keys = Object.keys(res[0]);
-      console.log("key",keys);
       return keys;
     });
   return obj
