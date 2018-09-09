@@ -11,3 +11,16 @@ export const getKeyFromJson = () => {
     });
   return obj
 };
+
+export const filterTable = (list, route) => {
+  console.log("list",list);
+  console.log("route",route);
+  switch(route){
+    case '/id':
+      return list.sort(item=>item.id);
+    case '/complete':
+      return list.filter(item => item.isComplete)
+    default:
+      return list
+  }
+}

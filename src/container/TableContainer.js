@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 import { TableForm } from "../components/table/index";
-import { getAll, getKeyFromJson } from "../lib/personService";
+import PropTypes from "prop-types";
+import { getAll, getKeyFromJson, filterTable } from "../lib/personService";
 
 class TableContainer extends Component {
+
+  static contextTypes = {
+    route: PropTypes.string
+  }
+
   state = {
     rowsFromDbJson: [],
     keysFromDbJson: [],
     sort:false
-  };
+  }
 
   componentDidMount() {
     console.log("componentDidMount");
@@ -21,6 +27,8 @@ class TableContainer extends Component {
   };
 
   handleChange = event => {
+    event.preventDefault();
+    console.log(event);
     console.log(event.target);
    // console.log(event.target.value);
     this.setState({ sort: true });
@@ -28,11 +36,12 @@ class TableContainer extends Component {
   };
 
   render() {
+    const displayTable = filterTable(this.state.rowsFromDbJson, this.context.route)
     return (
       <div>
         <TableForm
           handleSubmitAddRow={this.handleSubmitAddRow}
-          rows={this.state.rowsFromDbJson}
+          rows={displayTable}
           keys={this.state.keysFromDbJson}
           handleChange={this.handleChange}
         />

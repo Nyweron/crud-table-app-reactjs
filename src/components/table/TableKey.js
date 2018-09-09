@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from '../router'
 
 export const TableKey = props => {
 
@@ -7,7 +8,9 @@ export const TableKey = props => {
     <tr>
       {props.keys.map(item=>(
         <th key={item}>
-          <a onClick={props.handleChange} value={props.sort} href={"#"+item }>{item}</a>
+          {/* <a onClick={props.handleChange} href={"#"+item }> */}
+            {<Link to={'/'+item}>{item}</Link>}
+          {/* </a> */}
         </th>
       ))}
     </tr>
