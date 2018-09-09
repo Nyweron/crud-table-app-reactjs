@@ -12,15 +12,31 @@ export const getKeyFromJson = () => {
   return obj
 };
 
-export const filterTable = (list, route) => {
-  console.log("list",list);
-  console.log("route",route);
-  switch(route){
-    case '/id':
-      return list.sort(item=>item.id);
-    case '/complete':
-      return list.filter(item => item.isComplete)
-    default:
-      return list
-  }
+export const filterTable = (keys, rows, route) => {
+  // switch(route){
+    if(keys !== undefined){
+      for (let i = 0; i < keys.length; i++) {
+        if(keys[i] === route){
+          console.log("rows",rows)
+          console.log("keys[i]",keys[i])
+            return rows.sort(function(item) {
+              console.log("item", item)
+             if( item[keys[i]] !== undefined){
+               console.log("item[keys[i]]",item[keys[i]].toString())
+                return item[keys[i]].toString()
+              }
+              else{
+                return "";
+              }
+            })
+        }
+      }
+    }
+    // case '/id':
+    //   return list.sort(item=>item.id);
+    // case '/complete':
+    //   return list.filter(item => item.isComplete)
+    // default:
+      return rows
+  // }
 }

@@ -36,7 +36,7 @@ class TableContainer extends Component {
   };
 
   render() {
-    const displayTable = filterTable(this.state.rowsFromDbJson, this.context.route)
+    const displayTable = filterTable(this.state.keysFromDbJson, this.state.rowsFromDbJson, this.context.route)
     return (
       <div>
         <TableForm

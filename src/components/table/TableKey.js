@@ -9,7 +9,7 @@ export const TableKey = props => {
       {props.keys.map(item=>(
         <th key={item}>
           {/* <a onClick={props.handleChange} href={"#"+item }> */}
-            {<Link to={'/'+item}>{item}</Link>}
+            {<Link to={item}>{item}</Link>}
           {/* </a> */}
         </th>
       ))}
