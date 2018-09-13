@@ -1,42 +1,48 @@
-const baseUrl = "http://localhost:8080/person";
+const baseUrl = "http://localhost:8081/person";
 
 export const getAll = () => {
   return fetch(baseUrl).then(res => res.json());
 };
 
 export const getKeyFromJson = () => {
-  let obj = getAll().then(function(res){
-      let keys = Object.keys(res[0]);
-      return keys;
-    });
-  return obj
+  let obj = getAll().then(function(res) {
+    let keys = Object.keys(res[0]);
+    return keys;
+  });
+  return obj;
 };
 
-export const filterTable = (keys, rows, route) => {
-  // switch(route){
-    if(keys !== undefined){
-      for (let i = 0; i < keys.length; i++) {
-        if(keys[i] === route){
-          console.log("rows",rows)
-          console.log("keys[i]",keys[i])
-            return rows.sort(function(item) {
-              console.log("item", item)
-             if( item[keys[i]] !== undefined){
-               console.log("item[keys[i]]",item[keys[i]].toString())
-                return item[keys[i]].toString()
-              }
-              else{
-                return "";
-              }
-            })
+export const filterTable = (keys, rows, route, isSort) => {
+  console.log("issort", isSort);
+  if (keys === undefined) {
+    return rows;
+  }
+
+  const keysLength = keys.length;
+  for (let i = 0; i < keysLength; i++) {
+    if (keys[i] === route) {
+      return rows.sort(function(current, next) {
+        let x = current[keys[i]];
+        let y = next[keys[i]];
+        if (isSort) {
+          return sortDescending(x, y);
+        } else {
+          return sortAscending(x, y);
         }
-      }
-    }
-    // case '/id':
-    //   return list.sort(item=>item.id);
-    // case '/complete':
-    //   return list.filter(item => item.isComplete)
-    // default:
-      return rows
-  // }
+      });
+    }/*END if (keys[i] === route)*/
+  } /*END for*/
+  return rows;
+};
+
+function sortDescending(x, y){
+  if (x > y || y === undefined) { return -1; }
+  else if (x < y || x === undefined) { return 1; }
+  else { return 0; }
+}
+
+function sortAscending(x, y){
+  if (x < y || x === undefined) { return -1; }
+  else if (x > y || y === undefined) { return 1; }
+  else { return 0; }
 }

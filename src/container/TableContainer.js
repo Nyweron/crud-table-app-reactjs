@@ -12,7 +12,7 @@ class TableContainer extends Component {
   state = {
     rowsFromDbJson: [],
     keysFromDbJson: [],
-    sort:false
+    sort:true
   }
 
   componentDidMount() {
@@ -36,7 +36,8 @@ class TableContainer extends Component {
   };
 
   render() {
-    const displayTable = filterTable(this.state.keysFromDbJson, this.state.rowsFromDbJson, this.context.route)
+    this.state.sort = !this.state.sort
+    const displayTable = filterTable(this.state.keysFromDbJson, this.state.rowsFromDbJson, this.context.route, this.state.sort)
     return (
       <div>
         <TableForm
