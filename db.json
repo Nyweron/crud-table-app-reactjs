@@ -5,37 +5,45 @@
       "firstName": "Homer",
       "lastName": "Simpson",
       "age": 45,
-      "isActive":true,
-      "Hobby":"drink beer"
+      "isActive": true,
+      "Hobby": "drink beer"
     },
     {
       "id": 2,
       "firstName": "Merge",
       "lastName": "Simpson",
       "age": 42,
-      "isActive":true
+      "isActive": true
     },
     {
       "id": 3,
       "firstName": "Bart",
       "lastName": "Simpson",
       "age": 15,
-      "isActive":true,
-      "Hobby":"Makes homer angry"
+      "isActive": true,
+      "Hobby": "Makes homer angry"
     },
     {
       "id": 4,
       "firstName": "Lisa",
       "lastName": "Simpson",
       "age": 12,
-      "isActive":false
+      "isActive": false
     },
     {
       "id": 5,
       "firstName": "Maggie",
       "lastName": "Simpson",
       "age": 1,
-      "isActive":true
+      "isActive": true
+    },
+    {
+      "id": 7,
+      "firstName": "gfghf",
+      "lastName": "fgf",
+      "age": "",
+      "isActive": true,
+      "hobby": ""
     }
   ]
 }

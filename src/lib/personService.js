@@ -12,8 +12,18 @@ export const getKeyFromJson = () => {
   return obj;
 };
 
+export const createPerson = person => {
+  return fetch(baseUrl, {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(person)
+  }).then(res => res.json());
+};
+
 export const filterTable = (keys, rows, route, isSort) => {
-  console.log("issort", isSort);
   if (keys === undefined) {
     return rows;
   }
