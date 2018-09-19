@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { TableForm } from "../components/table/index";
 import PropTypes from "prop-types";
-import { getAll, getKeyFromJson, filterTable, createPerson } from "../lib/personService";
+import {
+  getAll,
+  getKeyFromJson,
+  filterTable,
+  createPerson
+} from "../lib/personService";
 
 class TableContainer extends Component {
   static contextTypes = {
@@ -17,7 +22,7 @@ class TableContainer extends Component {
     age: "",
     isActive: true,
     hobby: "",
-    id:0
+    id: 0
   };
 
   componentDidMount() {
@@ -34,7 +39,7 @@ class TableContainer extends Component {
     event.preventDefault();
 
     const allRows = this.state.rowsFromDbJson;
-    const newId = allRows[allRows.length-1].id + 1;
+    const newId = allRows[allRows.length - 1].id + 1;
     const newPerson = {
       id: newId,
       firstName: this.state.firstName,
@@ -42,26 +47,23 @@ class TableContainer extends Component {
       age: this.state.age,
       isActive: true,
       hobby: this.state.hobby
-    }
+    };
 
     createPerson(newPerson);
-    this.setState({rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]});
+    this.setState({
+      rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
+    });
   };
 
   handleChange = event => {
     event.preventDefault();
 
-    if (event.target.name === "firstName") {
-      this.setState({ firstName: event.target.value });
-    } else if (event.target.name === "lastName") {
-      this.setState({ lastName: event.target.value });
-    } else if (event.target.name === "age") {
-      this.setState({ age: event.target.value });
-    } else if (event.target.name === "hobby") {
-      this.setState({ hobby: event.target.value });
+    for (let index = 0; index < this.state.keysFromDbJson.length; index++) {
+      if (event.target.name === this.state.keysFromDbJson[index].toString()) {
+        this.setState({ [event.target.name]: event.target.value });
+      }
     }
   };
-
 
   render() {
     this.state.sort = !this.state.sort;
