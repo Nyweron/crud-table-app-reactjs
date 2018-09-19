@@ -6,7 +6,7 @@
       "lastName": "Simpson",
       "age": 45,
       "isActive": true,
-      "Hobby": "drink beer"
+      "hobby": "drink beer"
     },
     {
       "id": 2,
@@ -21,7 +21,7 @@
       "lastName": "Simpson",
       "age": 15,
       "isActive": true,
-      "Hobby": "Makes homer angry"
+      "hobby": "Makes homer angry"
     },
     {
       "id": 4,
@@ -36,14 +36,6 @@
       "lastName": "Simpson",
       "age": 1,
       "isActive": true
-    },
-    {
-      "id": 7,
-      "firstName": "gfghf",
-      "lastName": "fgf",
-      "age": "",
-      "isActive": true,
-      "hobby": ""
     }
   ]
 }

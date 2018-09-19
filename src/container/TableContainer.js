@@ -17,7 +17,7 @@ class TableContainer extends Component {
     age: "",
     isActive: true,
     hobby: "",
-    id:6
+    id:0
   };
 
   componentDidMount() {
@@ -32,34 +32,34 @@ class TableContainer extends Component {
 
   handleSubmitAddRow = event => {
     event.preventDefault();
-    console.log("handleSubmitAddRow", event.target);
-    console.log("firstName", this.state.firstName);
-    console.log("lastName", this.state.lastName);
 
-console.log("id",6+1)
+    const allRows = this.state.rowsFromDbJson;
+    const newId = allRows[allRows.length-1].id + 1;
     const newPerson = {
-      id: this.state.id + 1,
+      id: newId,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       age: this.state.age,
       isActive: true,
       hobby: this.state.hobby
     }
+
     createPerson(newPerson);
+    this.setState({rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]});
   };
 
   handleChange = event => {
     event.preventDefault();
-    console.log("handleChange", event.target);
-    console.log("handleChange name", event.target.name);
-    console.log("handleChange value", event.target.value);
 
     if (event.target.name === "firstName") {
       this.setState({ firstName: event.target.value });
     } else if (event.target.name === "lastName") {
       this.setState({ lastName: event.target.value });
+    } else if (event.target.name === "age") {
+      this.setState({ age: event.target.value });
+    } else if (event.target.name === "hobby") {
+      this.setState({ hobby: event.target.value });
     }
-
   };
 
 
