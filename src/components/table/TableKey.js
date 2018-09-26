@@ -7,9 +7,9 @@ export const TableKey = props => {
     <tr>
       {props.keys.map(item=>(
         <th key={item}>
-          {/* <a onClick={props.handleChange} href={"#"+item }> */}
-            {<Link to={item}>{item}</Link>}
-          {/* </a> */}
+          <a onClick={props.sortColumn.bind(null,item)} href={"#"+item }>
+            {item}
+          </a>
         </th>
       ))}
     </tr>

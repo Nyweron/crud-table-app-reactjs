@@ -7,7 +7,9 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import {Router} from './components/router'
 
 ReactDOM.render(
-  <Router><App /></Router>,
+  // <Router>
+    <App />,
+    // </Router>,
   document.getElementById('root')
 );
 registerServiceWorker();

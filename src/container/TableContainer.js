@@ -22,7 +22,9 @@ class TableContainer extends Component {
     age: "",
     isActive: true,
     hobby: "",
-    id: 0
+    id: 0,
+    columnName: "",
+    previousColumnName: ""
   };
 
   componentDidMount() {
@@ -31,11 +33,8 @@ class TableContainer extends Component {
     getKeyFromJson().then(key => this.setState({ keysFromDbJson: key }));
   }
 
-  componentWillUpdate() {
-    console.log("componentWillUpdate");
-  }
-
   handleSubmitAddRow = event => {
+    console.log("handleSubmitAddRow")
     event.preventDefault();
 
     const allRows = this.state.rowsFromDbJson;
@@ -56,6 +55,7 @@ class TableContainer extends Component {
   };
 
   handleChange = event => {
+    console.log("handleChange")
     event.preventDefault();
 
     for (let index = 0; index < this.state.keysFromDbJson.length; index++) {
@@ -65,14 +65,32 @@ class TableContainer extends Component {
     }
   };
 
+  sortColumn = (temp) => {
+
+    if(this.state.previousColumnName === temp){
+    console.log("1")
+      this.setState({columnName: temp});
+      this.state.sort = !this.state.sort;
+      this.setState({sort:  this.state.sort});
+    }else{
+      console.log("2")
+      this.setState({columnName: temp});
+      this.setState({previousColumnName: temp});
+      this.state.sort = !this.state.sort;
+      this.setState({sort:  this.state.sort});
+    }
+    console.log("sortColumn",temp)
+    console.log("this.state.sort",this.state.sort)
+
+  }
+
   render() {
-    this.state.sort = !this.state.sort;
     const displayTable = filterTable(
       this.state.keysFromDbJson,
       this.state.rowsFromDbJson,
-      this.context.route,
+      this.state.columnName,
       this.state.sort
-    );
+     );
     return (
       <div>
         <TableForm
@@ -80,6 +98,7 @@ class TableContainer extends Component {
           rows={displayTable}
           keys={this.state.keysFromDbJson}
           handleChange={this.handleChange}
+          sortColumn={this.sortColumn}
         />
       </div>
     );

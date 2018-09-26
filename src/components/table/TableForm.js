@@ -25,6 +25,7 @@ export const TableForm = props => (
         keys={props.keys}
         classCss="table table-striped table-bordered"
         handleChange={props.handleChange}
+        sortColumn={props.sortColumn}
       />
     </div>
   </form >
