@@ -65,6 +65,10 @@ class TableContainer extends Component {
     }
   };
 
+  handleRemove = event =>{
+    console.log("HandleRemove", event);
+  }
+
   sortColumn = (temp) => {
 
     if(this.state.previousColumnName === temp){
@@ -85,6 +89,7 @@ class TableContainer extends Component {
   }
 
   render() {
+
     const displayTable = filterTable(
       this.state.keysFromDbJson,
       this.state.rowsFromDbJson,
@@ -99,6 +104,7 @@ class TableContainer extends Component {
           keys={this.state.keysFromDbJson}
           handleChange={this.handleChange}
           sortColumn={this.sortColumn}
+          handleRemove={this.handleRemove}
         />
       </div>
     );

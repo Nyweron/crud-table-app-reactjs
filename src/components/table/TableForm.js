@@ -26,6 +26,7 @@ export const TableForm = props => (
         classCss="table table-striped table-bordered"
         handleChange={props.handleChange}
         sortColumn={props.sortColumn}
+        handleRemove={props.handleRemove}
       />
     </div>
   </form >

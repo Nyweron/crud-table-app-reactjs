@@ -17,3 +17,8 @@
   font-size: large;
 }
 
+.delete-item a {
+  text-decoration: none;
+  color: red;
+}
+

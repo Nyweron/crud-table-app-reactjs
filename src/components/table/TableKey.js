@@ -12,6 +12,7 @@ export const TableKey = props => {
           </a>
         </th>
       ))}
+      <th>Remove</th>
     </tr>
   );
 };

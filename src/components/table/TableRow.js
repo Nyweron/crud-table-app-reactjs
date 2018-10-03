@@ -11,6 +11,7 @@ export const TableRow = props => {
           }
           return <td key={row.id + "-" + i}></td>
         })}
+         <td className="delete-item"><a href="#" onClick={props.handleRemove.bind(null, row.id)}>X</a></td>
       </tr>
     );
   });

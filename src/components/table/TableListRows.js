@@ -10,7 +10,7 @@ export const TableListRows = props => {
         <TableKey  sortColumn={props.sortColumn} keys={props.keys} />
       </thead>
       <tbody>
-        <TableRow rows={props.rows} keys={props.keys} />
+        <TableRow rows={props.rows} keys={props.keys} handleRemove={props.handleRemove} />
       </tbody>
     </table>
   );
