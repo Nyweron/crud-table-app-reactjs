@@ -5,8 +5,10 @@ import {
   getAll,
   getKeyFromJson,
   filterTable,
-  createPerson
+  createPerson,
+  deleteRow
 } from "../lib/personService";
+import { removeRowById } from "../lib/personHelpers";
 
 class TableContainer extends Component {
   static contextTypes = {
@@ -49,6 +51,7 @@ class TableContainer extends Component {
     };
 
     createPerson(newPerson);
+    console.log("createPerson")
     this.setState({
       rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
     });
@@ -65,12 +68,24 @@ class TableContainer extends Component {
     }
   };
 
-  handleRemove = event =>{
-    console.log("HandleRemove", event);
+  handleRemove = id => {
+    console.log("handleRemove")
+    let listOfRows = this.state.rowsFromDbJson;
+    const newListWithoutRemovedItem = removeRowById(listOfRows, id);
+    this.setState({ rowsFromDbJson: newListWithoutRemovedItem });
+    deleteRow(id).then(() => this.showTempMessage("row deleted"));
   }
 
-  sortColumn = (temp) => {
+  showTempMessage = msg => {
+    console.log("showTempMessage")
+    this.setState({ message: msg });
+    setTimeout(() => {
+      this.setState({ message: "" });
+    }, 2000);
+  };
 
+  sortColumn = (temp) => {
+    console.log("sortColumn")
     if(this.state.previousColumnName === temp){
     console.log("1")
       this.setState({columnName: temp});
@@ -98,6 +113,9 @@ class TableContainer extends Component {
      );
     return (
       <div>
+        {this.state.message && (
+          <span className="success">{this.state.message}</span>
+        )}
         <TableForm
           handleSubmitAddRow={this.handleSubmitAddRow}
           rows={displayTable}

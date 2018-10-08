@@ -1,10 +1,12 @@
 const baseUrl = "http://localhost:8081/person";
 
 export const getAll = () => {
+  console.log("getAll")
   return fetch(baseUrl).then(res => res.json());
 };
 
 export const getKeyFromJson = () => {
+  console.log("getKeyFromJson")
   let obj = getAll().then(function(res) {
     let keys = Object.keys(res[0]);
     return keys;
@@ -13,6 +15,7 @@ export const getKeyFromJson = () => {
 };
 
 export const createPerson = person => {
+  console.log("createPerson")
   return fetch(baseUrl, {
     method: "POST",
     headers: {
@@ -23,11 +26,23 @@ export const createPerson = person => {
   }).then(res => res.json());
 };
 
+export const deleteRow = id => {
+  console.log("deleteRow")
+  return fetch(`${baseUrl}/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    }
+  });
+};
+
 export const filterTable = (keys, rows, route, isSort) => {
-  if (keys === undefined) {
+  console.log("filterTable", keys)
+  if (keys === undefined || keys.length === 0) {
     return rows;
   }
-
+  console.log("filterTable2", keys)
   const keysLength = keys.length;
   for (let i = 0; i < keysLength; i++) {
     if (keys[i] === route) {
