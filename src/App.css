@@ -17,3 +17,15 @@
   font-size: large;
 }
 
+.delete-item a {
+  text-decoration: none;
+  color: red;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
