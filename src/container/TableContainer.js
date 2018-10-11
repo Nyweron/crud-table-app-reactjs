@@ -31,12 +31,17 @@ class TableContainer extends Component {
 
   componentDidMount() {
     console.log("componentDidMount");
-    getAll().then(person => this.setState({ rowsFromDbJson: person }));
-    getKeyFromJson().then(key => this.setState({ keysFromDbJson: key }));
+    getAll().then(rows => {
+      this.setState({ rowsFromDbJson: rows })
+      const keys = getKeyFromJson(rows);
+      if(keys !== null){
+        this.setState({  keysFromDbJson: keys })
+      }
+    })
   }
 
   handleSubmitAddRow = event => {
-    console.log("handleSubmitAddRow")
+    console.log("handleSubmitAddRow");
     event.preventDefault();
 
     const allRows = this.state.rowsFromDbJson;
@@ -51,14 +56,14 @@ class TableContainer extends Component {
     };
 
     createPerson(newPerson);
-    console.log("createPerson")
+    console.log("createPerson");
     this.setState({
       rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
     });
   };
 
   handleChange = event => {
-    console.log("handleChange")
+    console.log("handleChange");
     event.preventDefault();
 
     for (let index = 0; index < this.state.keysFromDbJson.length; index++) {
@@ -69,48 +74,44 @@ class TableContainer extends Component {
   };
 
   handleRemove = id => {
-    console.log("handleRemove")
+    console.log("handleRemove");
     let listOfRows = this.state.rowsFromDbJson;
     const newListWithoutRemovedItem = removeRowById(listOfRows, id);
     this.setState({ rowsFromDbJson: newListWithoutRemovedItem });
     deleteRow(id).then(() => this.showTempMessage("row deleted"));
-  }
+  };
 
   showTempMessage = msg => {
-    console.log("showTempMessage")
+    console.log("showTempMessage");
     this.setState({ message: msg });
     setTimeout(() => {
       this.setState({ message: "" });
     }, 2000);
   };
 
-  sortColumn = (temp) => {
-    console.log("sortColumn")
-    if(this.state.previousColumnName === temp){
-    console.log("1")
-      this.setState({columnName: temp});
-      this.state.sort = !this.state.sort;
-      this.setState({sort:  this.state.sort});
-    }else{
-      console.log("2")
-      this.setState({columnName: temp});
-      this.setState({previousColumnName: temp});
-      this.state.sort = !this.state.sort;
-      this.setState({sort:  this.state.sort});
+  sortColumn = currentColumnName => {
+    console.log("sortColumn", currentColumnName);
+    if (this.state.previousColumnName === currentColumnName) {
+      console.log("1");
+      this.setState({ columnName: currentColumnName });
+      this.setState({ sort: !this.state.sort });
+    } else {
+      console.log("2");
+      this.setState({ columnName: currentColumnName });
+      this.setState({ previousColumnName: currentColumnName });
+      this.setState({ sort: !this.state.sort });
     }
-    console.log("sortColumn",temp)
-    console.log("this.state.sort",this.state.sort)
-
-  }
+    console.log("sortColumn", currentColumnName);
+    console.log("this.state.sort", this.state.sort);
+  };
 
   render() {
-
     const displayTable = filterTable(
       this.state.keysFromDbJson,
       this.state.rowsFromDbJson,
       this.state.columnName,
       this.state.sort
-     );
+    );
     return (
       <div>
         {this.state.message && (

@@ -5,13 +5,12 @@ export const getAll = () => {
   return fetch(baseUrl).then(res => res.json());
 };
 
-export const getKeyFromJson = () => {
+export const getKeyFromJson = (rows) => {
   console.log("getKeyFromJson")
-  let obj = getAll().then(function(res) {
-    let keys = Object.keys(res[0]);
-    return keys;
-  });
-  return obj;
+  if(rows !== null && rows.length > 0){
+    return Object.keys(rows[0]);
+  }
+  return rows;
 };
 
 export const createPerson = person => {
@@ -39,7 +38,7 @@ export const deleteRow = id => {
 
 export const filterTable = (keys, rows, route, isSort) => {
   console.log("filterTable", keys)
-  if (keys === undefined || keys.length === 0) {
+  if (keys === null || keys === undefined || keys.length === 0) {
     return rows;
   }
   console.log("filterTable2", keys)
