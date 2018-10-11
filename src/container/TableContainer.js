@@ -45,7 +45,11 @@ class TableContainer extends Component {
     event.preventDefault();
 
     const allRows = this.state.rowsFromDbJson;
+    allRows.sort(function(a, b) {
+      return a.id - b.id  ||  a.name.localeCompare(b.name);
+    });
     const newId = allRows[allRows.length - 1].id + 1;
+
     const newPerson = {
       id: newId,
       firstName: this.state.firstName,
@@ -55,7 +59,7 @@ class TableContainer extends Component {
       hobby: this.state.hobby
     };
 
-    createPerson(newPerson);
+    createPerson(newPerson).then(() => this.showTempMessage("person created"));
     console.log("createPerson");
     this.setState({
       rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
@@ -109,12 +113,14 @@ class TableContainer extends Component {
     if(this.state.keysFromDbJson === null || this.state.keysFromDbJson.length === 0){
       return (<div></div>);
     }
+
     const displayTable = filterTable(
       this.state.keysFromDbJson,
       this.state.rowsFromDbJson,
       this.state.columnName,
       this.state.sort
     );
+
     return (
       <div>
         {this.state.message && (
