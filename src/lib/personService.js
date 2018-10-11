@@ -48,11 +48,12 @@ export const filterTable = (keys, rows, route, isSort) => {
       return rows.sort(function(current, next) {
         let x = current[keys[i]];
         let y = next[keys[i]];
-        if (isSort) {
-          return sortDescending(x, y);
-        } else {
-          return sortAscending(x, y);
-        }
+
+        if(typeof(x) === "string"){ x = x.toUpperCase(); }
+        if(typeof(y) === "string"){ y = y.toUpperCase(); }
+
+        if (isSort) { return sortDescending(x, y); }
+        else { return sortAscending(x, y); }
       });
     }/*END if (keys[i] === route)*/
   } /*END for*/
