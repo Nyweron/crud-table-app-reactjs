@@ -37,10 +37,10 @@ export const deleteRow = id => {
 };
 
 export const filterTable = (keys, rows, route, isSort) => {
-  console.log("filterTable", keys)
   if (keys === null || keys === undefined || keys.length === 0) {
     return rows;
   }
+
   console.log("filterTable2", keys)
   const keysLength = keys.length;
   for (let i = 0; i < keysLength; i++) {

@@ -106,6 +106,9 @@ class TableContainer extends Component {
   };
 
   render() {
+    if(this.state.keysFromDbJson === null || this.state.keysFromDbJson.length === 0){
+      return (<div></div>);
+    }
     const displayTable = filterTable(
       this.state.keysFromDbJson,
       this.state.rowsFromDbJson,
