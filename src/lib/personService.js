@@ -71,3 +71,14 @@ function sortAscending(x, y){
   else if (x > y || y === undefined) { return 1; }
   else { return 0; }
 }
+
+export const updateRow = row => {
+  return fetch(`${baseUrl}/${row.id}`, {
+    method: "PUT",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(row)
+  }).then(res => res.json());
+}

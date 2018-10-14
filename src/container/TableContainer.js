@@ -6,9 +6,14 @@ import {
   getKeyFromJson,
   filterTable,
   createPerson,
-  deleteRow
+  deleteRow,
+  updateRow
 } from "../lib/personService";
-import { removeRowById } from "../lib/personHelpers";
+import {
+  removeRowById,
+  findById,
+  updateByObjectId
+} from "../lib/personHelpers";
 
 class TableContainer extends Component {
   static contextTypes = {
@@ -32,24 +37,32 @@ class TableContainer extends Component {
   componentDidMount() {
     console.log("componentDidMount");
     getAll().then(rows => {
-      this.setState({ rowsFromDbJson: rows })
+      this.setState({ rowsFromDbJson: rows });
       const keys = getKeyFromJson(rows);
-      if(keys !== null){
-        this.setState({  keysFromDbJson: keys })
+      if (keys !== null) {
+        this.setState({ keysFromDbJson: keys });
       }
-    })
+    });
   }
 
   handleSubmitAddRow = event => {
     console.log("handleSubmitAddRow");
     event.preventDefault();
 
+    if (
+      this.state.firstName === null ||
+      this.state.firstName === undefined ||
+      this.state.firstName === ""
+    ) {
+      this.showTempMessage("Firstname is required");
+      return;
+    }
+
     const allRows = this.state.rowsFromDbJson;
     allRows.sort(function(a, b) {
-      return a.id - b.id  ||  a.name.localeCompare(b.name);
+      return a.id - b.id || a.name.localeCompare(b.name);
     });
     const newId = allRows[allRows.length - 1].id + 1;
-
     const newPerson = {
       id: newId,
       firstName: this.state.firstName,
@@ -85,6 +98,19 @@ class TableContainer extends Component {
     deleteRow(id).then(() => this.showTempMessage("row deleted"));
   };
 
+  handleEdit = id => {
+    console.log("handleEdit id", id)
+    let listOfRows = this.state.rowsFromDbJson;
+    let row = findById(listOfRows, id);
+    //row.isComplete = row.isComplete ? false : true;
+    console.log("handleEdit row", row)
+    const newUpdatedRowsList = updateByObjectId(listOfRows, row);
+    console.log("listOfRows", listOfRows)
+    console.log("newUpdatedRowsList", newUpdatedRowsList)
+    //this.setState({ rowsFromDbJson: newUpdatedRowsList });
+    //updateRow(row).then(() => this.showTempMessage("row updated"));
+  };
+
   showTempMessage = msg => {
     console.log("showTempMessage");
     this.setState({ message: msg });
@@ -110,8 +136,11 @@ class TableContainer extends Component {
   };
 
   render() {
-    if(this.state.keysFromDbJson === null || this.state.keysFromDbJson.length === 0){
-      return (<div></div>);
+    if (
+      this.state.keysFromDbJson === null ||
+      this.state.keysFromDbJson.length === 0
+    ) {
+      return <div />;
     }
 
     const displayTable = filterTable(
@@ -133,6 +162,7 @@ class TableContainer extends Component {
           handleChange={this.handleChange}
           sortColumn={this.sortColumn}
           handleRemove={this.handleRemove}
+          handleEdit={this.handleEdit}
         />
       </div>
     );

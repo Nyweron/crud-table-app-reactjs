@@ -27,6 +27,7 @@ export const TableForm = props => (
         handleChange={props.handleChange}
         sortColumn={props.sortColumn}
         handleRemove={props.handleRemove}
+        handleEdit={props.handleEdit}
       />
     </div>
   </form >
