@@ -17,6 +17,11 @@ export const TableRow = props => {
               X
             </a>
           </td>
+          <td className="edit-item">
+            <a href="#/" onClick={props.handleEdit.bind(null, row.id)}>
+              edit
+            </a>
+          </td>
         </tr>
       );
     });
