@@ -6,8 +6,9 @@ import {
   getKeyFromJson,
   filterTable,
   createPerson,
-  deleteRow,
-  updateRow
+  deleteRow
+  //,
+  //updateRow
 } from "../lib/personService";
 import {
   removeRowById,
@@ -99,14 +100,14 @@ class TableContainer extends Component {
   };
 
   handleEdit = id => {
-    console.log("handleEdit id", id)
+    console.log("handleEdit id", id);
     let listOfRows = this.state.rowsFromDbJson;
     let row = findById(listOfRows, id);
     //row.isComplete = row.isComplete ? false : true;
-    console.log("handleEdit row", row)
+    console.log("handleEdit row", row);
     const newUpdatedRowsList = updateByObjectId(listOfRows, row);
-    console.log("listOfRows", listOfRows)
-    console.log("newUpdatedRowsList", newUpdatedRowsList)
+    console.log("listOfRows", listOfRows);
+    console.log("newUpdatedRowsList", newUpdatedRowsList);
     //this.setState({ rowsFromDbJson: newUpdatedRowsList });
     //updateRow(row).then(() => this.showTempMessage("row updated"));
   };
