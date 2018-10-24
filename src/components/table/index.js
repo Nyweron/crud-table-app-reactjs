@@ -1,1 +1,1 @@
-export {TableForm} from './TableForm';
+export { TableForm } from "./TableForm";
