@@ -6,9 +6,8 @@ import {
   getKeyFromJson,
   filterTable,
   createPerson,
-  deleteRow
-  //,
-  //updateRow
+  deleteRow,
+  updateRow
 } from "../lib/personService";
 import {
   removeRowById,
@@ -34,7 +33,8 @@ class TableContainer extends Component {
     columnName: "",
     previousColumnName: "",
     editing: false,
-    text: ""
+    text: "",
+    tempIdEdit: -1
   };
 
   componentDidMount() {
@@ -102,11 +102,12 @@ class TableContainer extends Component {
   };
 
   handleEdit = id => {
+    this.setState({ tempIdEdit: id });
     console.log("handleEdit id", id);
-    let listOfRows = this.state.rowsFromDbJson;
-    let row = findById(listOfRows, id);
+    // let listOfRows = this.state.rowsFromDbJson;
+    //let row = findById(listOfRows, id);
     // //row.isComplete = row.isComplete ? false : true;
-    console.log("handleEdit row", row);
+    //console.log("handleEdit row", row);
     // const newUpdatedRowsList = updateByObjectId(listOfRows, row);
     // console.log("listOfRows", listOfRows);
     // console.log("newUpdatedRowsList", newUpdatedRowsList);
@@ -117,16 +118,30 @@ class TableContainer extends Component {
   };
 
   handleEdit2 = id => {
+    console.log("tempIdEdit", this.state.tempIdEdit);
     console.log("handleEdit2 id", id);
-    //  let listOfRows = this.state.rowsFromDbJson;
-    //  let row = findById(listOfRows, id);
-    // //row.isComplete = row.isComplete ? false : true;
-    // console.log("handleEdit row", row);
-    // const newUpdatedRowsList = updateByObjectId(listOfRows, row);
-    // console.log("listOfRows", listOfRows);
-    // console.log("newUpdatedRowsList", newUpdatedRowsList);
-    //this.setState({ rowsFromDbJson: newUpdatedRowsList });
-    //updateRow(row).then(() => this.showTempMessage("row updated"));
+
+    console.log("newPerson", newPerson);
+    let listOfRows = this.state.rowsFromDbJson;
+    let row = findById(listOfRows, this.state.tempIdEdit);
+
+    const newPerson = {
+      id: row.id,
+      firstName: this.refs.firstName.value,
+      lastName: this.refs.lastName.value,
+      age: this.refs.age.value,
+      isActive: true,
+      hobby: this.refs.hobby.value
+    };
+
+    //row.isComplete = row.isComplete ? false : true;
+    console.log("handleEdit2 row", row);
+    const newUpdatedRowsList = updateByObjectId(listOfRows, newPerson);
+    console.log("listOfRows", listOfRows);
+    console.log("newPerson", newPerson);
+    console.log("newUpdatedRowsList", newUpdatedRowsList);
+    this.setState({ rowsFromDbJson: newUpdatedRowsList });
+    updateRow(row).then(() => this.showTempMessage("row updated"));
     this.setState({ editing: false });
   };
 
@@ -193,6 +208,7 @@ class TableContainer extends Component {
               id="firstNameInput"
               placeholder="firstName"
               name="firstName"
+              ref="firstName"
             />
           </div>
           <div className="col-xs-2">
@@ -201,6 +217,7 @@ class TableContainer extends Component {
               className="form-control"
               placeholder="lastName"
               name="lastName"
+              ref="lastName"
             />
           </div>
           <div className="col-xs-2">
@@ -209,6 +226,7 @@ class TableContainer extends Component {
               className="form-control"
               placeholder="age"
               name="age"
+              ref="age"
               min="0"
               max="100"
             />
@@ -219,6 +237,7 @@ class TableContainer extends Component {
               className="form-control"
               placeholder="hobby"
               name="hobby"
+              ref="hobby"
             />
           </div>
           {/* <input type="submit" value="Submit" /> */}
