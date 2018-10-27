@@ -12,7 +12,9 @@ import {
 import {
   removeRowById,
   findById,
-  updateByObjectId
+  updateByObjectId,
+  sortIds,
+  generateNewId
 } from "../lib/personHelpers";
 
 class TableContainer extends Component {
@@ -62,10 +64,8 @@ class TableContainer extends Component {
     }
 
     const allRows = this.state.rowsFromDbJson;
-    allRows.sort(function(a, b) {
-      return a.id - b.id || a.name.localeCompare(b.name);
-    });
-    const newId = allRows[allRows.length - 1].id + 1;
+    const sortedIds = sortIds(allRows);
+    const newId = generateNewId(sortedIds);
     const newPerson = {
       id: newId,
       firstName: this.state.firstName,
@@ -121,11 +121,10 @@ class TableContainer extends Component {
     console.log("tempIdEdit", this.state.tempIdEdit);
     console.log("handleEdit2 id", id);
 
-    console.log("newPerson", newPerson);
     let listOfRows = this.state.rowsFromDbJson;
     let row = findById(listOfRows, this.state.tempIdEdit);
 
-    const newPerson = {
+    const editExistRow = {
       id: row.id,
       firstName: this.refs.firstName.value,
       lastName: this.refs.lastName.value,
@@ -136,11 +135,11 @@ class TableContainer extends Component {
 
     //row.isComplete = row.isComplete ? false : true;
     console.log("handleEdit2 row", row);
-    const newUpdatedRowsList = updateByObjectId(listOfRows, newPerson);
+    const newUpdatedRowList = updateByObjectId(listOfRows, editExistRow);
     console.log("listOfRows", listOfRows);
-    console.log("newPerson", newPerson);
-    console.log("newUpdatedRowsList", newUpdatedRowsList);
-    this.setState({ rowsFromDbJson: newUpdatedRowsList });
+    console.log("editExistRow", editExistRow);
+    console.log("newUpdatedRowsList", newUpdatedRowList);
+    this.setState({ rowsFromDbJson: newUpdatedRowList });
     updateRow(row).then(() => this.showTempMessage("row updated"));
     this.setState({ editing: false });
   };
@@ -173,76 +172,61 @@ class TableContainer extends Component {
     console.log("x", x);
     this.setState({ editing: true });
   };
+
   save = x => {
     console.log("this.refs.newText", this.refs.newText.text);
     console.log("x", x.value);
-    // if (this.refs.newText !== undefined) {
     var val = this.refs.newText.value;
 
     this.setState({
-      // ** Update "text" property with new value (this fires render() again)
       text: val,
       editing: false
     });
-    // }
   };
-  // renderNormal() {
-  //   // ** Render "state.text" inside your <p> whether its empty or not...
-  //   return (
-  //     <div>
-  //       <p>{this.state.text}</p>
-  //       <button onClick={this.edit}>Edit</button>
-  //     </div>
-  //   );
-  // }
+
   renderForm() {
     return (
-      <div>
-        <textarea ref="newText" defaultValue="Edit me" />
-
-        <div className="form-group row">
-          <div className="col-xs-2">
-            <input
-              type="text"
-              className="form-control"
-              id="firstNameInput"
-              placeholder="firstName"
-              name="firstName"
-              ref="firstName"
-            />
-          </div>
-          <div className="col-xs-2">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="lastName"
-              name="lastName"
-              ref="lastName"
-            />
-          </div>
-          <div className="col-xs-2">
-            <input
-              type="number"
-              className="form-control"
-              placeholder="age"
-              name="age"
-              ref="age"
-              min="0"
-              max="100"
-            />
-          </div>
-          <div className="col-xs-2">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="hobby"
-              name="hobby"
-              ref="hobby"
-            />
-          </div>
-          {/* <input type="submit" value="Submit" /> */}
-          <button onClick={this.handleEdit2}>Save</button>
+      <div className="form-group row">
+        <div className="col-xs-2">
+          <input
+            type="text"
+            className="form-control"
+            id="firstNameInput"
+            placeholder="firstName"
+            name="firstName"
+            ref="firstName"
+          />
         </div>
+        <div className="col-xs-2">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="lastName"
+            name="lastName"
+            ref="lastName"
+          />
+        </div>
+        <div className="col-xs-2">
+          <input
+            type="number"
+            className="form-control"
+            placeholder="age"
+            name="age"
+            ref="age"
+            min="0"
+            max="100"
+          />
+        </div>
+        <div className="col-xs-2">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="hobby"
+            name="hobby"
+            ref="hobby"
+          />
+        </div>
+        <button onClick={this.handleEdit2}>Save</button>
       </div>
     );
   }
