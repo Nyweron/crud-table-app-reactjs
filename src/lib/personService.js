@@ -1,8 +1,8 @@
-const baseUrl = "http://localhost:8081/person";
+import { personUrl } from "../apiUrl";
 
 export const getAll = () => {
   console.log("getAll");
-  return fetch(baseUrl).then(res => res.json());
+  return fetch(personUrl).then(res => res.json());
 };
 
 export const getKeyFromJson = rows => {
@@ -15,7 +15,7 @@ export const getKeyFromJson = rows => {
 
 export const createPerson = person => {
   console.log("createPerson");
-  return fetch(baseUrl, {
+  return fetch(personUrl, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -27,7 +27,7 @@ export const createPerson = person => {
 
 export const deleteRow = id => {
   console.log("deleteRow");
-  return fetch(`${baseUrl}/${id}`, {
+  return fetch(`${personUrl}/${id}`, {
     method: "DELETE",
     headers: {
       Accept: "application/json",
@@ -88,7 +88,7 @@ function sortAscending(x, y) {
 }
 
 export const updateRow = row => {
-  return fetch(`${baseUrl}/${row.id}`, {
+  return fetch(`${personUrl}/${row.id}`, {
     method: "PUT",
     headers: {
       Accept: "application/json",
