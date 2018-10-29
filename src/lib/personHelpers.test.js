@@ -1,4 +1,4 @@
-import { removeRowById, findById } from "./personHelpers";
+import { removeRowById, findById, sortIds } from "./personHelpers";
 
 test("findById should find object by id from list", () => {
   const startPersons = [
@@ -81,5 +81,79 @@ test("removeRowById should remove one element from array by id", () => {
   ];
 
   const result = removeRowById(startPersons, id);
+  expect(result).toEqual(expected);
+});
+
+test("sortIds should return sorted items ascending", () => {
+  const startPersons = [
+    {
+      id: 2,
+      firstName: "Jerry",
+      lastName: "Mouse",
+      age: 11,
+      isActive: true,
+      hobby: "Sleep"
+    },
+    {
+      id: 1,
+      firstName: "Tom",
+      lastName: "Cat",
+      age: 10,
+      isActive: true,
+      hobby: "Bike"
+    },
+    {
+      id: 4,
+      firstName: "Bunny",
+      lastName: "Bugs Bunny",
+      age: 13,
+      isActive: false,
+      hobby: "Eat carrots"
+    },
+    {
+      id: 3,
+      firstName: "Duck",
+      lastName: "Donald Duck",
+      age: 12,
+      isActive: false,
+      hobby: "Play tennis"
+    }
+  ];
+  const expected = [
+    {
+      id: 1,
+      firstName: "Tom",
+      lastName: "Cat",
+      age: 10,
+      isActive: true,
+      hobby: "Bike"
+    },
+    {
+      id: 2,
+      firstName: "Jerry",
+      lastName: "Mouse",
+      age: 11,
+      isActive: true,
+      hobby: "Sleep"
+    },
+    {
+      id: 3,
+      firstName: "Duck",
+      lastName: "Donald Duck",
+      age: 12,
+      isActive: false,
+      hobby: "Play tennis"
+    },
+    {
+      id: 4,
+      firstName: "Bunny",
+      lastName: "Bugs Bunny",
+      age: 13,
+      isActive: false,
+      hobby: "Eat carrots"
+    }
+  ];
+
+  const result = sortIds(startPersons);
   expect(result).toEqual(expected);
 });
