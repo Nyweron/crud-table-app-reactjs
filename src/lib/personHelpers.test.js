@@ -2,7 +2,8 @@ import {
   removeRowById,
   findById,
   sortIds,
-  generateNewId
+  generateNewId,
+  updateByObjectId
 } from "./personHelpers";
 
 test("findById should find object by id from list", () => {
@@ -186,4 +187,55 @@ test("generateNewId should return new id number ascending ", () => {
 
   const result = generateNewId(startPersons);
   expect(result).toEqual(expectedId);
+});
+
+test("updateByObjectId should update exist object with new data", () => {
+  const startPersons = [
+    {
+      id: 1,
+      firstName: "Tom",
+      lastName: "Cat",
+      age: 10,
+      isActive: true,
+      hobby: "Bike"
+    },
+    {
+      id: 2,
+      firstName: "Jerry",
+      lastName: "Mouse",
+      age: 11,
+      isActive: true,
+      hobby: "Sleep"
+    }
+  ];
+  const updatedObject = {
+    id: 1,
+    firstName: "Updated Tom",
+    lastName: "Updated Cat",
+    age: 10,
+    isActive: false,
+    hobby: "Bike"
+  };
+
+  const expected = [
+    {
+      id: 1,
+      firstName: "Updated Tom",
+      lastName: "Updated Cat",
+      age: 10,
+      isActive: false,
+      hobby: "Bike"
+    },
+    {
+      id: 2,
+      firstName: "Jerry",
+      lastName: "Mouse",
+      age: 11,
+      isActive: true,
+      hobby: "Sleep"
+    }
+  ];
+
+  const result = updateByObjectId(startPersons, updatedObject);
+  expect(result).toEqual(expected);
 });
