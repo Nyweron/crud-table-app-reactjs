@@ -1,4 +1,9 @@
-import { removeRowById, findById, sortIds } from "./personHelpers";
+import {
+  removeRowById,
+  findById,
+  sortIds,
+  generateNewId
+} from "./personHelpers";
 
 test("findById should find object by id from list", () => {
   const startPersons = [
@@ -156,4 +161,29 @@ test("sortIds should return sorted items ascending", () => {
 
   const result = sortIds(startPersons);
   expect(result).toEqual(expected);
+});
+
+test("generateNewId should return new id number ascending ", () => {
+  const startPersons = [
+    {
+      id: 1,
+      firstName: "Tom",
+      lastName: "Cat",
+      age: 10,
+      isActive: true,
+      hobby: "Bike"
+    },
+    {
+      id: 2,
+      firstName: "Jerry",
+      lastName: "Mouse",
+      age: 11,
+      isActive: true,
+      hobby: "Sleep"
+    }
+  ];
+  const expectedId = 3;
+
+  const result = generateNewId(startPersons);
+  expect(result).toEqual(expectedId);
 });
