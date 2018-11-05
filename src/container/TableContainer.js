@@ -36,11 +36,15 @@ class TableContainer extends Component {
     previousColumnName: "",
     editing: false,
     text: "",
-    tempIdEdit: -1
+    tempIdEdit: -1,
+    firstNameRef: React.createRef(),
+    lastNameRef: React.createRef(),
+    ageRef: React.createRef(),
+    hobbyRef: React.createRef()
   };
 
   componentDidMount() {
-    console.log("componentDidMount");
+    //console.log("componentDidMount");
     getAll().then(rows => {
       this.setState({ rowsFromDbJson: rows });
       const keys = getKeyFromJson(rows);
@@ -122,35 +126,30 @@ class TableContainer extends Component {
     this.setState({ editing: true });
   };
 
-  handleEdit2 = id => {
-    console.log("tempIdEdit", this.state.tempIdEdit);
-    console.log("handleEdit2 id", id);
-
+  handleEdit2 = () => {
     let listOfRows = this.state.rowsFromDbJson;
     let row = findById(listOfRows, this.state.tempIdEdit);
 
     const editExistRow = {
       id: row.id,
-      firstName: this.refs.firstName.value,
-      lastName: this.refs.lastName.value,
-      age: this.refs.age.value,
+      firstName: this.state.firstNameRef.current.value,
+      lastName: this.state.lastNameRef.current.value,
+      age: this.state.ageRef.current.value,
       isActive: true,
-      hobby: this.refs.hobby.value
+      hobby: this.state.hobbyRef.current.value
     };
 
-    //row.isComplete = row.isComplete ? false : true;
-    console.log("handleEdit2 row", row);
     const newUpdatedRowList = updateByObjectId(listOfRows, editExistRow);
-    console.log("listOfRows", listOfRows);
-    console.log("editExistRow", editExistRow);
-    console.log("newUpdatedRowsList", newUpdatedRowList);
-    this.setState({ rowsFromDbJson: newUpdatedRowList });
-    updateRow(row).then(() => this.showTempMessage("row updated"));
+
+    updateRow(editExistRow).then(
+      () => this.showTempMessage("row updated"),
+      this.setState({ rowsFromDbJson: newUpdatedRowList })
+    );
     this.setState({ editing: false });
   };
 
   showTempMessage = msg => {
-    console.log("showTempMessage");
+    // console.log("showTempMessage");
     this.setState({ message: msg });
     setTimeout(() => {
       this.setState({ message: "" });
@@ -203,7 +202,7 @@ class TableContainer extends Component {
             id="firstNameInput"
             placeholder="firstName"
             name="firstName"
-            ref="firstName"
+            ref={this.state.firstNameRef}
           />
         </div>
         <div className="col-xs-2">
@@ -212,7 +211,7 @@ class TableContainer extends Component {
             className="form-control"
             placeholder="lastName"
             name="lastName"
-            ref="lastName"
+            ref={this.state.lastNameRef}
           />
         </div>
         <div className="col-xs-2">
@@ -221,7 +220,7 @@ class TableContainer extends Component {
             className="form-control"
             placeholder="age"
             name="age"
-            ref="age"
+            ref={this.state.ageRef}
             min="0"
             max="100"
           />
@@ -232,7 +231,7 @@ class TableContainer extends Component {
             className="form-control"
             placeholder="hobby"
             name="hobby"
-            ref="hobby"
+            ref={this.state.hobbyRef}
           />
         </div>
         <button onClick={this.handleEdit2}>Save</button>
