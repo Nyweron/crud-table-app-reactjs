@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export const TableKey = props => {
+export const TableHead = props => {
   if (props.keys !== null) {
     return (
       <tr>
@@ -19,6 +19,6 @@ export const TableKey = props => {
   }
 };
 
-TableKey.propTypes = {
+TableHead.propTypes = {
   keys: PropTypes.array.isRequired
 };

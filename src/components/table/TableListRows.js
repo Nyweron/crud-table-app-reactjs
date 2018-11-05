@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { TableRow } from "./TableRow";
-import { TableKey } from "./TableKey";
+import { TableHead } from "./TableHead";
 
 export const TableListRows = props => {
   return (
     <table className={props.classCss}>
       <thead>
-        <TableKey sortColumn={props.sortColumn} keys={props.keys} />
+        <TableHead sortColumn={props.sortColumn} keys={props.keys} />
       </thead>
       <tbody>
         <TableRow
