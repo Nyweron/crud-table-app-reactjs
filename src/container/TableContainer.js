@@ -162,12 +162,16 @@ class TableContainer extends Component {
     if (this.state.previousColumnName === currentColumnName) {
       //console.log("1");
       this.setState({ columnName: currentColumnName });
-      this.setState({ sort: !this.state.sort });
+      this.setState(prevState => ({
+        sort: !prevState.sort
+      }));
     } else {
       //console.log("2");
       this.setState({ columnName: currentColumnName });
       this.setState({ previousColumnName: currentColumnName });
-      this.setState({ sort: !this.state.sort });
+      this.setState(prevState => ({
+        sort: !prevState.sort
+      }));
     }
     //console.log("sortColumn", currentColumnName);
     //console.log("this.state.sort", this.state.sort);
