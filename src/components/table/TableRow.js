@@ -12,12 +12,12 @@ export const TableRow = props => {
           return <td key={row.id + "-" + i} />;
         })}
         <td className="delete-item">
-          <a href="#/" onClick={props.handleRemove.bind(null, row.id)}>
+          <a href="#/" onClick={() => props.handleRemove(row.id)}>
             X
           </a>
         </td>
         <td className="edit-item">
-          <a href="#/" onClick={props.handleEdit.bind(null, row.id)}>
+          <a href="#/" onClick={() => props.handleEdit(row.id)}>
             edit
           </a>
         </td>
