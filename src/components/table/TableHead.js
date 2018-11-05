@@ -4,12 +4,10 @@ import PropTypes from "prop-types";
 export const TableHead = props => {
   if (props.keys !== null) {
     return (
-      <tr>
+      <tr style={{ color: "blue", cursor: "default" }}>
         {props.keys.map(item => (
           <th key={item}>
-            <a onClick={props.sortColumn.bind(null, item)} href={"#" + item}>
-              {item}
-            </a>
+            <span onClick={props.sortColumn.bind(null, item)}>{item}</span>
           </th>
         ))}
         <th>Remove</th>
