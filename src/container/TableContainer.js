@@ -75,11 +75,13 @@ class TableContainer extends Component {
       hobby: this.state.hobby
     };
 
-    createPerson(newPerson).then(() => this.showTempMessage("person created"));
+    createPerson(newPerson).then(
+      () => this.showTempMessage("person created"),
+      this.setState({
+        rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
+      })
+    );
     console.log("createPerson");
-    this.setState({
-      rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
-    });
   };
 
   handleChange = event => {
@@ -97,8 +99,11 @@ class TableContainer extends Component {
     console.log("handleRemove");
     let listOfRows = this.state.rowsFromDbJson;
     const newListWithoutRemovedItem = removeRowById(listOfRows, id);
-    this.setState({ rowsFromDbJson: newListWithoutRemovedItem });
-    deleteRow(id).then(() => this.showTempMessage("row deleted"));
+
+    deleteRow(id).then(
+      () => this.showTempMessage("row deleted"),
+      this.setState({ rowsFromDbJson: newListWithoutRemovedItem })
+    );
   };
 
   handleEdit = id => {
