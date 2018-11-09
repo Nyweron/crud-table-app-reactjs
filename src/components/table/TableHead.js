@@ -1,15 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export const TableKey = props => {
+export const TableHead = props => {
   if (props.keys !== null) {
     return (
-      <tr>
+      <tr style={{ color: "blue", cursor: "default" }}>
         {props.keys.map(item => (
           <th key={item}>
-            <a onClick={props.sortColumn.bind(null, item)} href={"#" + item}>
-              {item}
-            </a>
+            <span onClick={props.sortColumn.bind(null, item)}>{item}</span>
           </th>
         ))}
         <th>Remove</th>
@@ -19,6 +17,6 @@ export const TableKey = props => {
   }
 };
 
-TableKey.propTypes = {
+TableHead.propTypes = {
   keys: PropTypes.array.isRequired
 };
