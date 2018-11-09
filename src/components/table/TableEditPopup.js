@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import "../../App.css";
+import "./test.css";
 
-const Modal = ({ handleClose, show, children }) => {
-  const showHideClassName = show ? "modal display-block" : "modal display-none";
-  console.log("test45");
+const Modal = props => {
+  const showHideClassName = props.show
+    ? "modal display-block"
+    : "modal display-none";
+
   return (
     <div className={showHideClassName}>
-      <p>siema</p>
       <section className="modal-main">
-        {children}
-        <button onClick={handleClose}>Close</button>
+        {props.children}
+        <button onClick={props.handleClose}>Close</button>
       </section>
     </div>
   );
@@ -29,14 +30,22 @@ class TableEditPopup extends Component {
   };
 
   render() {
+    console.log("Test5");
     return (
       <main>
         <Modal show={this.state.show} handleClose={this.hideModal}>
           <p>Modal</p>
           <p>Data</p>
         </Modal>
-        <button type="button" onClick={this.showModal}>
-          Open
+        {/* <button type="button">Open</button> */}
+        <button
+          type="button"
+          onClick={this.showModal}
+          className="btn btn-primary"
+          data-toggle="modal"
+          data-target="#exampleModal"
+        >
+          Launch demo modal
         </button>
       </main>
     );
