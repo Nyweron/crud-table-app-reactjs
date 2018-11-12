@@ -131,6 +131,8 @@ class TableContainer extends Component {
     let listOfRows = this.state.rowsFromDbJson;
     let row = findById(listOfRows, this.state.tempIdEdit);
 
+    console.log(this.state);
+
     const editExistRow = {
       id: row.id,
       firstName: this.state.firstNameRef.current.value,

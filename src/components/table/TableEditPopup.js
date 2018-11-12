@@ -38,6 +38,11 @@ class TableEditPopup extends Component {
     this.showModal();
   };
 
+  submitForm2 = () => {
+    console.log("submitForm2");
+    this.props.props.handleEdit2();
+  };
+
   render() {
     //console.log("Test5");
 
@@ -84,22 +89,13 @@ class TableEditPopup extends Component {
                 ref={this.state.hobbyRef}
               />
             </div>
-            <button onClick={() => this.props.props.handleEdit2}>Save</button>
+            <button onClick={this.submitForm2}>Save</button>
           </div>
         </Modal>
 
         <a href="/#" onClick={this.submitForm}>
           edit
         </a>
-        {/* <button
-          type="button"
-          onClick={this.showModal}
-          className="btn btn-primary"
-          data-toggle="modal"
-          data-target="#exampleModal"
-        >
-          Launch demo modal
-        </button> */}
       </main>
     );
   }
