@@ -111,8 +111,8 @@ class TableContainer extends Component {
   };
 
   handleEdit = id => {
-    this.setState({ tempIdEdit: id });
     console.log("handleEdit id", id);
+    this.setState({ tempIdEdit: id });
     // let listOfRows = this.state.rowsFromDbJson;
     //let row = findById(listOfRows, id);
     // //row.isComplete = row.isComplete ? false : true;
@@ -127,6 +127,7 @@ class TableContainer extends Component {
   };
 
   handleEdit2 = () => {
+    console.log("handleEdit2");
     let listOfRows = this.state.rowsFromDbJson;
     let row = findById(listOfRows, this.state.tempIdEdit);
 
@@ -192,53 +193,6 @@ class TableContainer extends Component {
     });
   };
 
-  renderForm() {
-    return (
-      <div className="form-group row">
-        <div className="col-xs-2">
-          <input
-            type="text"
-            className="form-control"
-            id="firstNameInput"
-            placeholder="firstName"
-            name="firstName"
-            ref={this.state.firstNameRef}
-          />
-        </div>
-        <div className="col-xs-2">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="lastName"
-            name="lastName"
-            ref={this.state.lastNameRef}
-          />
-        </div>
-        <div className="col-xs-2">
-          <input
-            type="number"
-            className="form-control"
-            placeholder="age"
-            name="age"
-            ref={this.state.ageRef}
-            min="0"
-            max="100"
-          />
-        </div>
-        <div className="col-xs-2">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="hobby"
-            name="hobby"
-            ref={this.state.hobbyRef}
-          />
-        </div>
-        <button onClick={this.handleEdit2}>Save</button>
-      </div>
-    );
-  }
-
   render() {
     if (
       this.state.keysFromDbJson === null ||
@@ -254,28 +208,29 @@ class TableContainer extends Component {
       this.state.sort
     );
 
-    if (this.state.editing) {
-      return this.renderForm();
-    } else {
-      return (
-        <div>
-          {this.state.message && (
-            <span className="success">{this.state.message}</span>
-          )}
+    // if (this.state.editing) {
+    //   return this.renderForm();
+    // } else {
+    return (
+      <div>
+        {this.state.message && (
+          <span className="success">{this.state.message}</span>
+        )}
 
-          <TableForm
-            handleSubmitAddRow={this.handleSubmitAddRow}
-            rows={displayTable}
-            keys={this.state.keysFromDbJson}
-            handleChange={this.handleChange}
-            sortColumn={this.sortColumn}
-            handleRemove={this.handleRemove}
-            handleEdit={this.handleEdit}
-          />
-        </div>
-      );
-    }
+        <TableForm
+          handleSubmitAddRow={this.handleSubmitAddRow}
+          rows={displayTable}
+          keys={this.state.keysFromDbJson}
+          handleChange={this.handleChange}
+          sortColumn={this.sortColumn}
+          handleRemove={this.handleRemove}
+          handleEdit={this.handleEdit}
+          handleEdit2={this.handleEdit2}
+        />
+      </div>
+    );
   }
+  // }
 }
 
 export default TableContainer;

@@ -17,28 +17,81 @@ const Modal = props => {
 };
 
 class TableEditPopup extends Component {
-  state = { show: false };
+  constructor(props) {
+    super(props);
+    this.state = { show: false };
+    console.log("pross", props);
+  }
 
   showModal = () => {
-    console.log("Test1");
     this.setState({ show: true });
   };
 
   hideModal = () => {
-    console.log("Test2");
     this.setState({ show: false });
   };
 
+  submitForm = () => {
+    console.log("this.props.props", this.props.props);
+    console.log("this.rowId", this.props.rowId);
+    this.props.props.handleEdit(this.props.rowId);
+    this.showModal();
+  };
+
   render() {
-    console.log("Test5");
+    //console.log("Test5");
+
     return (
       <main>
         <Modal show={this.state.show} handleClose={this.hideModal}>
-          <p>Modal</p>
-          <p>Data</p>
+          <div className="form-group row">
+            <div className="col-xs-2">
+              <input
+                type="text"
+                className="form-control"
+                id="firstNameInput"
+                placeholder="firstName"
+                name="firstName"
+                ref={this.state.firstNameRef}
+              />
+            </div>
+            <div className="col-xs-2">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="lastName"
+                name="lastName"
+                ref={this.state.lastNameRef}
+              />
+            </div>
+            <div className="col-xs-2">
+              <input
+                type="number"
+                className="form-control"
+                placeholder="age"
+                name="age"
+                ref={this.state.ageRef}
+                min="0"
+                max="100"
+              />
+            </div>
+            <div className="col-xs-2">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="hobby"
+                name="hobby"
+                ref={this.state.hobbyRef}
+              />
+            </div>
+            <button onClick={() => this.props.props.handleEdit2}>Save</button>
+          </div>
         </Modal>
-        {/* <button type="button">Open</button> */}
-        <button
+
+        <a href="/#" onClick={this.submitForm}>
+          edit
+        </a>
+        {/* <button
           type="button"
           onClick={this.showModal}
           className="btn btn-primary"
@@ -46,7 +99,7 @@ class TableEditPopup extends Component {
           data-target="#exampleModal"
         >
           Launch demo modal
-        </button>
+        </button> */}
       </main>
     );
   }

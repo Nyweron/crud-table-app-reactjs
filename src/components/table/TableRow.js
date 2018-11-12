@@ -18,11 +18,10 @@ export const TableRow = props => {
           </a>
         </td>
         <td className="edit-item">
-          <a href="#/" onClick={() => props.handleEdit(row.id)}>
+          {/* <a href="#/" onClick={() => props.handleEdit(row.id)}>
             edit
-          </a>
-
-          <TableEditPopup />
+          </a> */}
+          <TableEditPopup rowId={row.id} props={props} />
         </td>
       </tr>
     );
