@@ -36,11 +36,7 @@ class TableContainer extends Component {
     previousColumnName: "",
     editing: false,
     text: "",
-    tempIdEdit: -1,
-    firstNameRef: React.createRef(),
-    lastNameRef: React.createRef(),
-    ageRef: React.createRef(),
-    hobbyRef: React.createRef()
+    tempIdEdit: -1
   };
 
   componentDidMount() {
@@ -126,29 +122,28 @@ class TableContainer extends Component {
     this.setState({ editing: true });
   };
 
-  handleEdit2 = () => {
-    console.log("handleEdit2");
+  handleEdit2 = editObj => {
+    console.log("handleEdit2", editObj);
     let listOfRows = this.state.rowsFromDbJson;
-    let row = findById(listOfRows, this.state.tempIdEdit);
-
-    console.log(this.state);
 
     const editExistRow = {
-      id: row.id,
-      firstName: this.state.firstNameRef.current.value,
-      lastName: this.state.lastNameRef.current.value,
-      age: this.state.ageRef.current.value,
+      id: editObj.idEdit,
+      firstName: editObj.firstNameEdit,
+      lastName: editObj.lastNameEdit,
+      age: editObj.ageEdit,
       isActive: true,
-      hobby: this.state.hobbyRef.current.value
+      hobby: editObj.hobbyEdit
     };
 
     const newUpdatedRowList = updateByObjectId(listOfRows, editExistRow);
 
     updateRow(editExistRow).then(
       () => this.showTempMessage("row updated"),
-      this.setState({ rowsFromDbJson: newUpdatedRowList })
+      this.setState({
+        rowsFromDbJson: newUpdatedRowList,
+        editing: false
+      })
     );
-    this.setState({ editing: false });
   };
 
   showTempMessage = msg => {

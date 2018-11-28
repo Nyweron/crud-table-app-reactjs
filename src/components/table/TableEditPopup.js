@@ -19,8 +19,15 @@ const Modal = props => {
 class TableEditPopup extends Component {
   constructor(props) {
     super(props);
-    this.state = { show: false };
-    console.log("pross", props);
+
+    this.state = {
+      show: false,
+      firstNameEdit: "",
+      lastNameEdit: "",
+      ageEdit: 0,
+      hobbyEdit: "",
+      idEdit: props.rowId
+    };
   }
 
   showModal = () => {
@@ -32,20 +39,23 @@ class TableEditPopup extends Component {
   };
 
   submitForm = () => {
-    console.log("this.props.props", this.props.props);
-    console.log("this.rowId", this.props.rowId);
     this.props.props.handleEdit(this.props.rowId);
     this.showModal();
   };
 
   submitForm2 = () => {
+    this.hideModal();
     console.log("submitForm2");
-    this.props.props.handleEdit2();
+    this.props.props.handleEdit2(this.state);
+  };
+
+  handleChange = event => {
+    console.log("handleChange");
+    event.preventDefault();
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   render() {
-    //console.log("Test5");
-
     return (
       <main>
         <Modal show={this.state.show} handleClose={this.hideModal}>
@@ -54,10 +64,10 @@ class TableEditPopup extends Component {
               <input
                 type="text"
                 className="form-control"
-                id="firstNameInput"
                 placeholder="firstName"
-                name="firstName"
-                ref={this.state.firstNameRef}
+                name="firstNameEdit"
+                value={this.state.firstNameEdit}
+                onChange={this.handleChange}
               />
             </div>
             <div className="col-xs-2">
@@ -65,8 +75,9 @@ class TableEditPopup extends Component {
                 type="text"
                 className="form-control"
                 placeholder="lastName"
-                name="lastName"
-                ref={this.state.lastNameRef}
+                name="lastNameEdit"
+                value={this.state.lastNameEdit}
+                onChange={this.handleChange}
               />
             </div>
             <div className="col-xs-2">
@@ -74,10 +85,11 @@ class TableEditPopup extends Component {
                 type="number"
                 className="form-control"
                 placeholder="age"
-                name="age"
-                ref={this.state.ageRef}
+                name="ageEdit"
                 min="0"
                 max="100"
+                value={this.state.ageEdit}
+                onChange={this.handleChange}
               />
             </div>
             <div className="col-xs-2">
@@ -85,8 +97,9 @@ class TableEditPopup extends Component {
                 type="text"
                 className="form-control"
                 placeholder="hobby"
-                name="hobby"
-                ref={this.state.hobbyRef}
+                name="hobbyEdit"
+                value={this.state.hobbyEdit}
+                onChange={this.handleChange}
               />
             </div>
             <button onClick={this.submitForm2}>Save</button>

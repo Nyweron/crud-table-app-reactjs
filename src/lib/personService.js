@@ -41,7 +41,7 @@ export const filterTable = (keys, rows, route, isSort) => {
     return rows;
   }
 
-  console.log("filterTable2", keys);
+  //console.log("filterTable2", keys);
   const keysLength = keys.length;
   for (let i = 0; i < keysLength; i++) {
     if (keys[i] === route) {
