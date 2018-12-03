@@ -1,20 +1,5 @@
 import React, { Component } from "react";
-import "./test.css";
-
-const Modal = props => {
-  const showHideClassName = props.show
-    ? "modal display-block"
-    : "modal display-none";
-
-  return (
-    <div className={showHideClassName}>
-      <section className="modal-main">
-        {props.children}
-        <button onClick={props.handleClose}>Close</button>
-      </section>
-    </div>
-  );
-};
+import { Modal } from "../modal/Modal";
 
 class TableEditPopup extends Component {
   constructor(props) {
@@ -56,7 +41,7 @@ class TableEditPopup extends Component {
   render() {
     return (
       <main>
-        <Modal show={this.state.show} handleClose={this.hideModal}>
+        <Modal show={this.state.show}>
           <div className="modal-body">
             <form>
               <div className="form-group">
@@ -123,7 +108,7 @@ class TableEditPopup extends Component {
               </div>
               <div className="form-group">
                 <label htmlFor="name" className="cols-sm-2 control-label">
-                  Age
+                  Hobby
                 </label>
                 <div className="cols-sm-5">
                   <div className="input-group">
@@ -143,6 +128,7 @@ class TableEditPopup extends Component {
               </div>
             </form>
           </div>
+          <button onClick={this.hideModal}>Close</button>
           <button onClick={this.submitEditForm}>Save</button>
         </Modal>
 
