@@ -45,7 +45,7 @@ class TableEditPopup extends Component {
   submitEditForm = () => {
     this.hideModal();
     console.log("submitEditForm");
-    this.props.props.handleEdit(this.state);
+    this.props.handleEdit(this.state);
   };
 
   handleChange = event => {
