@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { TableForm } from "../components/table/index";
 import { TableListRows } from "../components/table/TableListRows";
-import PropTypes from "prop-types";
 import {
   getAll,
   getKeyFromJson,
@@ -18,10 +17,6 @@ import {
 } from "../lib/personHelpers";
 
 class TableContainer extends Component {
-  static contextTypes = {
-    route: PropTypes.string
-  };
-
   state = {
     rowsFromDbJson: [],
     keysFromDbJson: [],
@@ -38,7 +33,6 @@ class TableContainer extends Component {
   };
 
   componentDidMount() {
-    //console.log("componentDidMount");
     getAll().then(rows => {
       this.setState({ rowsFromDbJson: rows });
       const keys = getKeyFromJson(rows);
@@ -141,7 +135,8 @@ class TableContainer extends Component {
   };
 
   sortColumn = currentColumnName => {
-    if (this.state.rowsFromDbJson.length == 2) {
+    /* We use 2 because in list always will be empty row with id=0 and new row which we will create. */
+    if (this.state.rowsFromDbJson.length === 2) {
       return;
     }
     if (this.state.previousColumnName === currentColumnName) {
@@ -150,8 +145,10 @@ class TableContainer extends Component {
         sort: !prevState.sort
       }));
     } else {
-      this.setState({ columnName: currentColumnName });
-      this.setState({ previousColumnName: currentColumnName });
+      this.setState({
+        columnName: currentColumnName,
+        previousColumnName: currentColumnName
+      });
       this.setState(prevState => ({
         sort: !prevState.sort
       }));
@@ -159,19 +156,6 @@ class TableContainer extends Component {
   };
 
   render() {
-    if (
-      this.state.keysFromDbJson === null ||
-      this.state.keysFromDbJson.length === 0
-    ) {
-      return (
-        <TableForm
-          handleSubmitAddRow={this.handleSubmitAddRow}
-          handleChange={this.handleChange}
-          personData={this.state}
-        />
-      );
-    }
-
     const displayTable = filterTable(
       this.state.keysFromDbJson,
       this.state.rowsFromDbJson,
