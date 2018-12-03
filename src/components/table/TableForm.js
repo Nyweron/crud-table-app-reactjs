@@ -1,5 +1,4 @@
 import React from "react";
-import { TableListRows } from "./TableListRows";
 
 export const TableForm = props => (
   <form onSubmit={props.handleSubmitAddRow}>
@@ -50,16 +49,6 @@ export const TableForm = props => (
         </div>
         <input type="submit" value="Submit" />
       </div>
-      <TableListRows
-        rows={props.rows}
-        keys={props.keys}
-        classCss="table table-striped table-bordered"
-        handleChange={props.handleChange}
-        sortColumn={props.sortColumn}
-        handleRemove={props.handleRemove}
-        handleEdit={props.handleEdit}
-        handleEdit2={props.handleEdit2}
-      />
     </div>
   </form>
 );

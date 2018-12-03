@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { TableForm } from "../components/table/index";
+import { TableListRows } from "../components/table/TableListRows";
 import PropTypes from "prop-types";
 import {
   getAll,
@@ -11,7 +12,6 @@ import {
 } from "../lib/personService";
 import {
   removeRowById,
-  findById,
   updateByObjectId,
   sortIds,
   generateNewId
@@ -90,7 +90,11 @@ class TableContainer extends Component {
   handleChange = event => {
     console.log("handleChange");
     event.preventDefault();
-
+    if (this.state.keysFromDbJson.length === 0) {
+      this.setState({
+        keysFromDbJson: this.state.keysFromDbJson.push(event.target.name)
+      });
+    }
     for (let index = 0; index < this.state.keysFromDbJson.length; index++) {
       if (event.target.name === this.state.keysFromDbJson[index].toString()) {
         this.setState({ [event.target.name]: event.target.value });
@@ -164,7 +168,13 @@ class TableContainer extends Component {
       this.state.keysFromDbJson === null ||
       this.state.keysFromDbJson.length === 0
     ) {
-      return <div />;
+      return (
+        <TableForm
+          handleSubmitAddRow={this.handleSubmitAddRow}
+          handleChange={this.handleChange}
+          personData={this.state}
+        />
+      );
     }
 
     const displayTable = filterTable(
@@ -179,14 +189,19 @@ class TableContainer extends Component {
         {this.state.message && (
           <span className="success">{this.state.message}</span>
         )}
-
         <TableForm
           handleSubmitAddRow={this.handleSubmitAddRow}
+          handleChange={this.handleChange}
+          personData={this.state}
+        />
+        <TableListRows
           rows={displayTable}
           keys={this.state.keysFromDbJson}
+          classCss="table table-striped table-bordered"
           handleChange={this.handleChange}
           sortColumn={this.sortColumn}
           handleRemove={this.handleRemove}
+          handleEdit={this.handleEdit}
           handleEdit2={this.handleEdit2}
         />
       </div>
