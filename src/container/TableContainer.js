@@ -34,9 +34,7 @@ class TableContainer extends Component {
     id: 0,
     columnName: "",
     previousColumnName: "",
-    editing: false,
-    text: "",
-    tempIdEdit: -1
+    text: ""
   };
 
   componentDidMount() {
@@ -65,6 +63,11 @@ class TableContainer extends Component {
 
     const allRows = this.state.rowsFromDbJson;
     const sortedIds = sortIds(allRows);
+    console.log("sortedIds", sortedIds);
+    if (sortedIds.length === 0) {
+      sortedIds.push("");
+    }
+    console.log("sortedIds", sortedIds);
     const newId = generateNewId(sortedIds);
     const newPerson = {
       id: newId,
@@ -106,22 +109,6 @@ class TableContainer extends Component {
     );
   };
 
-  handleEdit = id => {
-    console.log("handleEdit id", id);
-    this.setState({ tempIdEdit: id });
-    // let listOfRows = this.state.rowsFromDbJson;
-    //let row = findById(listOfRows, id);
-    // //row.isComplete = row.isComplete ? false : true;
-    //console.log("handleEdit row", row);
-    // const newUpdatedRowsList = updateByObjectId(listOfRows, row);
-    // console.log("listOfRows", listOfRows);
-    // console.log("newUpdatedRowsList", newUpdatedRowsList);
-    //this.setState({ rowsFromDbJson: newUpdatedRowsList });
-    //updateRow(row).then(() => this.showTempMessage("row updated"));
-
-    this.setState({ editing: true });
-  };
-
   handleEdit2 = editObj => {
     console.log("handleEdit2", editObj);
     let listOfRows = this.state.rowsFromDbJson;
@@ -140,14 +127,12 @@ class TableContainer extends Component {
     updateRow(editExistRow).then(
       () => this.showTempMessage("row updated"),
       this.setState({
-        rowsFromDbJson: newUpdatedRowList,
-        editing: false
+        rowsFromDbJson: newUpdatedRowList
       })
     );
   };
 
   showTempMessage = msg => {
-    // console.log("showTempMessage");
     this.setState({ message: msg });
     setTimeout(() => {
       this.setState({ message: "" });
@@ -174,22 +159,6 @@ class TableContainer extends Component {
     //console.log("this.state.sort", this.state.sort);
   };
 
-  edit = x => {
-    console.log("x", x);
-    this.setState({ editing: true });
-  };
-
-  save = x => {
-    console.log("this.refs.newText", this.refs.newText.text);
-    console.log("x", x.value);
-    var val = this.refs.newText.value;
-
-    this.setState({
-      text: val,
-      editing: false
-    });
-  };
-
   render() {
     if (
       this.state.keysFromDbJson === null ||
@@ -205,9 +174,6 @@ class TableContainer extends Component {
       this.state.sort
     );
 
-    // if (this.state.editing) {
-    //   return this.renderForm();
-    // } else {
     return (
       <div>
         {this.state.message && (
@@ -221,7 +187,6 @@ class TableContainer extends Component {
           handleChange={this.handleChange}
           sortColumn={this.sortColumn}
           handleRemove={this.handleRemove}
-          handleEdit={this.handleEdit}
           handleEdit2={this.handleEdit2}
         />
       </div>

@@ -39,7 +39,6 @@ class TableEditPopup extends Component {
   };
 
   submitForm = () => {
-    this.props.props.handleEdit(this.props.rowId);
     this.showModal();
   };
 
