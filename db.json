@@ -1,6 +1,14 @@
 {
   "Person": [
     {
+      "id": 0,
+      "firstName": "",
+      "lastName": "",
+      "age": 0,
+      "isActive": false,
+      "hobby": ""
+    },
+    {
       "id": 1,
       "firstName": "Homer",
       "lastName": "Simpson",

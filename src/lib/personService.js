@@ -1,12 +1,12 @@
 import { personUrl } from "../apiUrl";
 
 export const getAll = () => {
-  console.log("getAll");
+  // console.log("getAll");
   return fetch(personUrl).then(res => res.json());
 };
 
 export const getKeyFromJson = rows => {
-  console.log("getKeyFromJson");
+  //console.log("getKeyFromJson");
   if (rows !== null && rows.length > 0) {
     return Object.keys(rows[0]);
   }
@@ -41,7 +41,7 @@ export const filterTable = (keys, rows, route, isSort) => {
     return rows;
   }
 
-  console.log("filterTable2", keys);
+  //console.log("filterTable2", keys);
   const keysLength = keys.length;
   for (let i = 0; i < keysLength; i++) {
     if (keys[i] === route) {

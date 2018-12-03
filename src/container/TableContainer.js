@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { TableForm } from "../components/table/index";
-import PropTypes from "prop-types";
+import { TableListRows } from "../components/table/TableListRows";
 import {
   getAll,
   getKeyFromJson,
@@ -11,17 +11,12 @@ import {
 } from "../lib/personService";
 import {
   removeRowById,
-  findById,
   updateByObjectId,
   sortIds,
   generateNewId
 } from "../lib/personHelpers";
 
 class TableContainer extends Component {
-  static contextTypes = {
-    route: PropTypes.string
-  };
-
   state = {
     rowsFromDbJson: [],
     keysFromDbJson: [],
@@ -34,17 +29,10 @@ class TableContainer extends Component {
     id: 0,
     columnName: "",
     previousColumnName: "",
-    editing: false,
-    text: "",
-    tempIdEdit: -1,
-    firstNameRef: React.createRef(),
-    lastNameRef: React.createRef(),
-    ageRef: React.createRef(),
-    hobbyRef: React.createRef()
+    text: ""
   };
 
   componentDidMount() {
-    //console.log("componentDidMount");
     getAll().then(rows => {
       this.setState({ rowsFromDbJson: rows });
       const keys = getKeyFromJson(rows);
@@ -69,6 +57,9 @@ class TableContainer extends Component {
 
     const allRows = this.state.rowsFromDbJson;
     const sortedIds = sortIds(allRows);
+    if (sortedIds.length === 0) {
+      sortedIds.push("");
+    }
     const newId = generateNewId(sortedIds);
     const newPerson = {
       id: newId,
@@ -85,13 +76,16 @@ class TableContainer extends Component {
         rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
       })
     );
-    console.log("createPerson");
   };
 
   handleChange = event => {
     console.log("handleChange");
     event.preventDefault();
-
+    if (this.state.keysFromDbJson.length === 0) {
+      this.setState({
+        keysFromDbJson: this.state.keysFromDbJson.push(event.target.name)
+      });
+    }
     for (let index = 0; index < this.state.keysFromDbJson.length; index++) {
       if (event.target.name === this.state.keysFromDbJson[index].toString()) {
         this.setState({ [event.target.name]: event.target.value });
@@ -110,46 +104,30 @@ class TableContainer extends Component {
     );
   };
 
-  handleEdit = id => {
-    this.setState({ tempIdEdit: id });
-    console.log("handleEdit id", id);
-    // let listOfRows = this.state.rowsFromDbJson;
-    //let row = findById(listOfRows, id);
-    // //row.isComplete = row.isComplete ? false : true;
-    //console.log("handleEdit row", row);
-    // const newUpdatedRowsList = updateByObjectId(listOfRows, row);
-    // console.log("listOfRows", listOfRows);
-    // console.log("newUpdatedRowsList", newUpdatedRowsList);
-    //this.setState({ rowsFromDbJson: newUpdatedRowsList });
-    //updateRow(row).then(() => this.showTempMessage("row updated"));
-
-    this.setState({ editing: true });
-  };
-
-  handleEdit2 = () => {
+  handleEdit = editObj => {
+    console.log("handleEdit", editObj);
     let listOfRows = this.state.rowsFromDbJson;
-    let row = findById(listOfRows, this.state.tempIdEdit);
 
     const editExistRow = {
-      id: row.id,
-      firstName: this.state.firstNameRef.current.value,
-      lastName: this.state.lastNameRef.current.value,
-      age: this.state.ageRef.current.value,
+      id: editObj.idEdit,
+      firstName: editObj.firstNameEdit,
+      lastName: editObj.lastNameEdit,
+      age: editObj.ageEdit,
       isActive: true,
-      hobby: this.state.hobbyRef.current.value
+      hobby: editObj.hobbyEdit
     };
 
     const newUpdatedRowList = updateByObjectId(listOfRows, editExistRow);
 
     updateRow(editExistRow).then(
       () => this.showTempMessage("row updated"),
-      this.setState({ rowsFromDbJson: newUpdatedRowList })
+      this.setState({
+        rowsFromDbJson: newUpdatedRowList
+      })
     );
-    this.setState({ editing: false });
   };
 
   showTempMessage = msg => {
-    // console.log("showTempMessage");
     this.setState({ message: msg });
     setTimeout(() => {
       this.setState({ message: "" });
@@ -157,96 +135,27 @@ class TableContainer extends Component {
   };
 
   sortColumn = currentColumnName => {
-    //console.log("sortColumn", currentColumnName);
+    /* We use 2 because in list always will be empty row with id=0 and new row which we will create. */
+    if (this.state.rowsFromDbJson.length === 2) {
+      return;
+    }
     if (this.state.previousColumnName === currentColumnName) {
-      //console.log("1");
       this.setState({ columnName: currentColumnName });
       this.setState(prevState => ({
         sort: !prevState.sort
       }));
     } else {
-      //console.log("2");
-      this.setState({ columnName: currentColumnName });
-      this.setState({ previousColumnName: currentColumnName });
+      this.setState({
+        columnName: currentColumnName,
+        previousColumnName: currentColumnName
+      });
       this.setState(prevState => ({
         sort: !prevState.sort
       }));
     }
-    //console.log("sortColumn", currentColumnName);
-    //console.log("this.state.sort", this.state.sort);
   };
-
-  edit = x => {
-    console.log("x", x);
-    this.setState({ editing: true });
-  };
-
-  save = x => {
-    console.log("this.refs.newText", this.refs.newText.text);
-    console.log("x", x.value);
-    var val = this.refs.newText.value;
-
-    this.setState({
-      text: val,
-      editing: false
-    });
-  };
-
-  renderForm() {
-    return (
-      <div className="form-group row">
-        <div className="col-xs-2">
-          <input
-            type="text"
-            className="form-control"
-            id="firstNameInput"
-            placeholder="firstName"
-            name="firstName"
-            ref={this.state.firstNameRef}
-          />
-        </div>
-        <div className="col-xs-2">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="lastName"
-            name="lastName"
-            ref={this.state.lastNameRef}
-          />
-        </div>
-        <div className="col-xs-2">
-          <input
-            type="number"
-            className="form-control"
-            placeholder="age"
-            name="age"
-            ref={this.state.ageRef}
-            min="0"
-            max="100"
-          />
-        </div>
-        <div className="col-xs-2">
-          <input
-            type="text"
-            className="form-control"
-            placeholder="hobby"
-            name="hobby"
-            ref={this.state.hobbyRef}
-          />
-        </div>
-        <button onClick={this.handleEdit2}>Save</button>
-      </div>
-    );
-  }
 
   render() {
-    if (
-      this.state.keysFromDbJson === null ||
-      this.state.keysFromDbJson.length === 0
-    ) {
-      return <div />;
-    }
-
     const displayTable = filterTable(
       this.state.keysFromDbJson,
       this.state.rowsFromDbJson,
@@ -254,27 +163,27 @@ class TableContainer extends Component {
       this.state.sort
     );
 
-    if (this.state.editing) {
-      return this.renderForm();
-    } else {
-      return (
-        <div>
-          {this.state.message && (
-            <span className="success">{this.state.message}</span>
-          )}
-
-          <TableForm
-            handleSubmitAddRow={this.handleSubmitAddRow}
-            rows={displayTable}
-            keys={this.state.keysFromDbJson}
-            handleChange={this.handleChange}
-            sortColumn={this.sortColumn}
-            handleRemove={this.handleRemove}
-            handleEdit={this.handleEdit}
-          />
-        </div>
-      );
-    }
+    return (
+      <div className="container">
+        <TableForm
+          handleSubmitAddRow={this.handleSubmitAddRow}
+          handleChange={this.handleChange}
+          personData={this.state}
+        />
+        <TableListRows
+          rows={displayTable}
+          keys={this.state.keysFromDbJson}
+          classCss="table table-striped table-bordered"
+          handleChange={this.handleChange}
+          sortColumn={this.sortColumn}
+          handleRemove={this.handleRemove}
+          handleEdit={this.handleEdit}
+        />
+        {this.state.message && (
+          <span className="success">{this.state.message}</span>
+        )}
+      </div>
+    );
   }
 }
 
