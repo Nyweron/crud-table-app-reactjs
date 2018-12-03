@@ -63,11 +63,9 @@ class TableContainer extends Component {
 
     const allRows = this.state.rowsFromDbJson;
     const sortedIds = sortIds(allRows);
-    console.log("sortedIds", sortedIds);
     if (sortedIds.length === 0) {
       sortedIds.push("");
     }
-    console.log("sortedIds", sortedIds);
     const newId = generateNewId(sortedIds);
     const newPerson = {
       id: newId,
@@ -84,7 +82,6 @@ class TableContainer extends Component {
         rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
       })
     );
-    console.log("createPerson");
   };
 
   handleChange = event => {
@@ -144,23 +141,21 @@ class TableContainer extends Component {
   };
 
   sortColumn = currentColumnName => {
-    //console.log("sortColumn", currentColumnName);
+    if (this.state.rowsFromDbJson.length == 2) {
+      return;
+    }
     if (this.state.previousColumnName === currentColumnName) {
-      //console.log("1");
       this.setState({ columnName: currentColumnName });
       this.setState(prevState => ({
         sort: !prevState.sort
       }));
     } else {
-      //console.log("2");
       this.setState({ columnName: currentColumnName });
       this.setState({ previousColumnName: currentColumnName });
       this.setState(prevState => ({
         sort: !prevState.sort
       }));
     }
-    //console.log("sortColumn", currentColumnName);
-    //console.log("this.state.sort", this.state.sort);
   };
 
   render() {
@@ -185,10 +180,7 @@ class TableContainer extends Component {
     );
 
     return (
-      <div>
-        {this.state.message && (
-          <span className="success">{this.state.message}</span>
-        )}
+      <div className="container">
         <TableForm
           handleSubmitAddRow={this.handleSubmitAddRow}
           handleChange={this.handleChange}
@@ -204,6 +196,9 @@ class TableContainer extends Component {
           handleEdit={this.handleEdit}
           handleEdit2={this.handleEdit2}
         />
+        {this.state.message && (
+          <span className="success">{this.state.message}</span>
+        )}
       </div>
     );
   }
