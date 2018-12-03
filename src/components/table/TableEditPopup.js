@@ -45,7 +45,7 @@ class TableEditPopup extends Component {
   submitForm2 = () => {
     this.hideModal();
     console.log("submitForm2");
-    this.props.props.handleEdit2(this.state);
+    this.props.props.handleEdit(this.state);
   };
 
   handleChange = event => {
@@ -58,51 +58,93 @@ class TableEditPopup extends Component {
     return (
       <main>
         <Modal show={this.state.show} handleClose={this.hideModal}>
-          <div className="form-group row">
-            <div className="col-xs-2">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="firstName"
-                name="firstNameEdit"
-                value={this.state.firstNameEdit}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="col-xs-2">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="lastName"
-                name="lastNameEdit"
-                value={this.state.lastNameEdit}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="col-xs-2">
-              <input
-                type="number"
-                className="form-control"
-                placeholder="age"
-                name="ageEdit"
-                min="0"
-                max="100"
-                value={this.state.ageEdit}
-                onChange={this.handleChange}
-              />
-            </div>
-            <div className="col-xs-2">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="hobby"
-                name="hobbyEdit"
-                value={this.state.hobbyEdit}
-                onChange={this.handleChange}
-              />
-            </div>
-            <button onClick={this.submitForm2}>Save</button>
+          <div className="modal-body">
+            <form>
+              <div className="form-group">
+                <label htmlFor="name" className="cols-sm-2 control-label">
+                  Firstname
+                </label>
+                <div className="cols-sm-5">
+                  <div className="input-group">
+                    <span className="input-group-addon">
+                      <i className="fa fa-user fa" aria-hidden="true" />
+                    </span>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="firstName"
+                      name="firstNameEdit"
+                      value={this.state.firstNameEdit}
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="name" className="cols-sm-2 control-label">
+                  Lastname
+                </label>
+                <div className="cols-sm-5">
+                  <div className="input-group">
+                    <span className="input-group-addon">
+                      <i className="fa fa-user fa" aria-hidden="true" />
+                    </span>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="lastName"
+                      name="lastNameEdit"
+                      value={this.state.lastNameEdit}
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="name" className="cols-sm-2 control-label">
+                  Age
+                </label>
+                <div className="cols-sm-5">
+                  <div className="input-group">
+                    <span className="input-group-addon">
+                      <i className="fa fa-user fa" aria-hidden="true" />
+                    </span>
+                    <input
+                      type="number"
+                      className="form-control"
+                      placeholder="age"
+                      name="ageEdit"
+                      min="0"
+                      max="100"
+                      value={this.state.ageEdit}
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="name" className="cols-sm-2 control-label">
+                  Age
+                </label>
+                <div className="cols-sm-5">
+                  <div className="input-group">
+                    <span className="input-group-addon">
+                      <i className="fa fa-user fa" aria-hidden="true" />
+                    </span>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="hobby"
+                      name="hobbyEdit"
+                      value={this.state.hobbyEdit}
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
+          <button onClick={this.submitForm2}>Save</button>
         </Modal>
 
         <a href="/#" onClick={this.submitForm}>

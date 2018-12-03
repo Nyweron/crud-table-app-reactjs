@@ -104,8 +104,8 @@ class TableContainer extends Component {
     );
   };
 
-  handleEdit2 = editObj => {
-    console.log("handleEdit2", editObj);
+  handleEdit = editObj => {
+    console.log("handleEdit", editObj);
     let listOfRows = this.state.rowsFromDbJson;
 
     const editExistRow = {
@@ -178,7 +178,6 @@ class TableContainer extends Component {
           sortColumn={this.sortColumn}
           handleRemove={this.handleRemove}
           handleEdit={this.handleEdit}
-          handleEdit2={this.handleEdit2}
         />
         {this.state.message && (
           <span className="success">{this.state.message}</span>
@@ -186,7 +185,6 @@ class TableContainer extends Component {
       </div>
     );
   }
-  // }
 }
 
 export default TableContainer;

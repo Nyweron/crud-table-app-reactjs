@@ -15,7 +15,6 @@ export const TableListRows = props => {
           keys={props.keys}
           handleRemove={props.handleRemove}
           handleEdit={props.handleEdit}
-          handleEdit2={props.handleEdit2}
           props={props}
         />
       </tbody>
