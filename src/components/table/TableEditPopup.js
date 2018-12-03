@@ -38,18 +38,17 @@ class TableEditPopup extends Component {
     this.setState({ show: false });
   };
 
-  submitForm = () => {
+  editForm = () => {
     this.showModal();
   };
 
-  submitForm2 = () => {
+  submitEditForm = () => {
     this.hideModal();
-    console.log("submitForm2");
+    console.log("submitEditForm");
     this.props.props.handleEdit(this.state);
   };
 
   handleChange = event => {
-    console.log("handleChange");
     event.preventDefault();
     this.setState({ [event.target.name]: event.target.value });
   };
@@ -144,10 +143,10 @@ class TableEditPopup extends Component {
               </div>
             </form>
           </div>
-          <button onClick={this.submitForm2}>Save</button>
+          <button onClick={this.submitEditForm}>Save</button>
         </Modal>
 
-        <a href="/#" onClick={this.submitForm}>
+        <a href="/#" onClick={this.editForm}>
           edit
         </a>
       </main>
