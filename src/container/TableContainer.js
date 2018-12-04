@@ -37,8 +37,6 @@ class TableContainer extends Component {
   }
 
   handleSubmitAddRow = addObj => {
-    console.log("handleSubmitAddRow", addObj);
-
     if (
       addObj.firstName === null ||
       addObj.firstName === undefined ||
@@ -72,7 +70,6 @@ class TableContainer extends Component {
   };
 
   handleChange = event => {
-    console.log("handleChange");
     event.preventDefault();
     if (this.state.keysFromDbJson.length === 0) {
       this.setState({
@@ -87,7 +84,6 @@ class TableContainer extends Component {
   };
 
   handleRemove = id => {
-    console.log("handleRemove");
     let listOfRows = this.state.rowsFromDbJson;
     const newListWithoutRemovedItem = removeRowById(listOfRows, id);
 
@@ -98,7 +94,6 @@ class TableContainer extends Component {
   };
 
   handleEdit = editObj => {
-    console.log("handleEdit", editObj);
     let listOfRows = this.state.rowsFromDbJson;
 
     const editExistRow = {
@@ -162,28 +157,32 @@ class TableContainer extends Component {
 
     return (
       <div className="container">
-        <button className="btn" onClick={this.negationAdd}>
-          Add row
-        </button>
+        <div className="row">
+          <button className="btn" onClick={this.negationAdd}>
+            Add row
+          </button>
+        </div>
+
         <TableAdd
           show={this.state.add}
           handleSubmitAddRow={this.handleSubmitAddRow}
           handleChange={this.handleChange}
           negationAdd={this.negationAdd}
         />
-
-        <TableListRows
-          rows={displayTable}
-          keys={this.state.keysFromDbJson}
-          classCss="table table-striped table-bordered"
-          handleChange={this.handleChange}
-          sortColumn={this.sortColumn}
-          handleRemove={this.handleRemove}
-          handleEdit={this.handleEdit}
-        />
-        {this.state.message && (
-          <span className="success">{this.state.message}</span>
-        )}
+        <div className="row">
+          <TableListRows
+            rows={displayTable}
+            keys={this.state.keysFromDbJson}
+            classCss="table table-striped table-bordered"
+            handleChange={this.handleChange}
+            sortColumn={this.sortColumn}
+            handleRemove={this.handleRemove}
+            handleEdit={this.handleEdit}
+          />
+          {this.state.message && (
+            <span className="success">{this.state.message}</span>
+          )}
+        </div>
       </div>
     );
   }

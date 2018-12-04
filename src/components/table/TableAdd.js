@@ -13,8 +13,6 @@ class TableAdd extends Component {
       hobby: "",
       show: false
     };
-
-    this.state.show = props.show;
   }
 
   showModal = () => {
