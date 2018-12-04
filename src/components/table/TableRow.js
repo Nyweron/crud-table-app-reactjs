@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TableEditPopup from "./TableEditPopup";
+import TableEdit from "./TableEdit";
 
 export const TableRow = props => {
   let rowsToReturn = props.rows.map(row => {
@@ -21,10 +21,7 @@ export const TableRow = props => {
             </a>
           </td>
           <td className="edit-item">
-            {/* <a href="#/" onClick={() => props.handleEdit(row.id)}>
-            edit
-          </a> */}
-            <TableEditPopup rowId={row.id} handleEdit={props.handleEdit} />
+            <TableEdit rowId={row.id} handleEdit={props.handleEdit} />
           </td>
         </tr>
       );

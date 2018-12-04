@@ -1,12 +1,10 @@
 import { personUrl } from "../apiUrl";
 
 export const getAll = () => {
-  // console.log("getAll");
   return fetch(personUrl).then(res => res.json());
 };
 
 export const getKeyFromJson = rows => {
-  //console.log("getKeyFromJson");
   if (rows !== null && rows.length > 0) {
     return Object.keys(rows[0]);
   }
@@ -14,7 +12,6 @@ export const getKeyFromJson = rows => {
 };
 
 export const createPerson = person => {
-  console.log("createPerson");
   return fetch(personUrl, {
     method: "POST",
     headers: {
@@ -26,7 +23,6 @@ export const createPerson = person => {
 };
 
 export const deleteRow = id => {
-  console.log("deleteRow");
   return fetch(`${personUrl}/${id}`, {
     method: "DELETE",
     headers: {
@@ -41,7 +37,6 @@ export const filterTable = (keys, rows, route, isSort) => {
     return rows;
   }
 
-  //console.log("filterTable2", keys);
   const keysLength = keys.length;
   for (let i = 0; i < keysLength; i++) {
     if (keys[i] === route) {

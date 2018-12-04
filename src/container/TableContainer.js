@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { TableForm } from "../components/table/index";
 import { TableListRows } from "../components/table/TableListRows";
+import TableAdd from "../components/table/TableAdd";
 import {
   getAll,
   getKeyFromJson,
@@ -21,15 +21,9 @@ class TableContainer extends Component {
     rowsFromDbJson: [],
     keysFromDbJson: [],
     sort: true,
-    firstName: "",
-    lastName: "",
-    age: "",
-    isActive: true,
-    hobby: "",
-    id: 0,
     columnName: "",
     previousColumnName: "",
-    text: ""
+    add: false
   };
 
   componentDidMount() {
@@ -42,14 +36,11 @@ class TableContainer extends Component {
     });
   }
 
-  handleSubmitAddRow = event => {
-    console.log("handleSubmitAddRow");
-    event.preventDefault();
-
+  handleSubmitAddRow = addObj => {
     if (
-      this.state.firstName === null ||
-      this.state.firstName === undefined ||
-      this.state.firstName === ""
+      addObj.firstName === null ||
+      addObj.firstName === undefined ||
+      addObj.firstName === ""
     ) {
       this.showTempMessage("Firstname is required");
       return;
@@ -63,11 +54,11 @@ class TableContainer extends Component {
     const newId = generateNewId(sortedIds);
     const newPerson = {
       id: newId,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName,
-      age: this.state.age,
+      firstName: addObj.firstName,
+      lastName: addObj.lastName,
+      age: addObj.age,
       isActive: true,
-      hobby: this.state.hobby
+      hobby: addObj.hobby
     };
 
     createPerson(newPerson).then(
@@ -79,7 +70,6 @@ class TableContainer extends Component {
   };
 
   handleChange = event => {
-    console.log("handleChange");
     event.preventDefault();
     if (this.state.keysFromDbJson.length === 0) {
       this.setState({
@@ -94,7 +84,6 @@ class TableContainer extends Component {
   };
 
   handleRemove = id => {
-    console.log("handleRemove");
     let listOfRows = this.state.rowsFromDbJson;
     const newListWithoutRemovedItem = removeRowById(listOfRows, id);
 
@@ -105,16 +94,15 @@ class TableContainer extends Component {
   };
 
   handleEdit = editObj => {
-    console.log("handleEdit", editObj);
     let listOfRows = this.state.rowsFromDbJson;
 
     const editExistRow = {
       id: editObj.idEdit,
-      firstName: editObj.firstNameEdit,
-      lastName: editObj.lastNameEdit,
-      age: editObj.ageEdit,
+      firstName: editObj.firstName,
+      lastName: editObj.lastName,
+      age: editObj.age,
       isActive: true,
-      hobby: editObj.hobbyEdit
+      hobby: editObj.hobby
     };
 
     const newUpdatedRowList = updateByObjectId(listOfRows, editExistRow);
@@ -155,6 +143,10 @@ class TableContainer extends Component {
     }
   };
 
+  negationAdd = () => {
+    this.setState({ add: !this.state.add });
+  };
+
   render() {
     const displayTable = filterTable(
       this.state.keysFromDbJson,
@@ -165,23 +157,32 @@ class TableContainer extends Component {
 
     return (
       <div className="container">
-        <TableForm
+        <div className="row">
+          <button className="btn" onClick={this.negationAdd}>
+            Add row
+          </button>
+        </div>
+
+        <TableAdd
+          show={this.state.add}
           handleSubmitAddRow={this.handleSubmitAddRow}
           handleChange={this.handleChange}
-          personData={this.state}
+          negationAdd={this.negationAdd}
         />
-        <TableListRows
-          rows={displayTable}
-          keys={this.state.keysFromDbJson}
-          classCss="table table-striped table-bordered"
-          handleChange={this.handleChange}
-          sortColumn={this.sortColumn}
-          handleRemove={this.handleRemove}
-          handleEdit={this.handleEdit}
-        />
-        {this.state.message && (
-          <span className="success">{this.state.message}</span>
-        )}
+        <div className="row">
+          <TableListRows
+            rows={displayTable}
+            keys={this.state.keysFromDbJson}
+            classCss="table table-striped table-bordered"
+            handleChange={this.handleChange}
+            sortColumn={this.sortColumn}
+            handleRemove={this.handleRemove}
+            handleEdit={this.handleEdit}
+          />
+          {this.state.message && (
+            <span className="success">{this.state.message}</span>
+          )}
+        </div>
       </div>
     );
   }
