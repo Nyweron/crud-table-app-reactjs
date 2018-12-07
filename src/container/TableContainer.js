@@ -95,15 +95,17 @@ class TableContainer extends Component {
 
   handleEdit = editObj => {
     let listOfRows = this.state.rowsFromDbJson;
-
+    console.log("editObj", editObj);
     const editExistRow = {
-      id: editObj.idEdit,
+      id: editObj.id,
       firstName: editObj.firstName,
       lastName: editObj.lastName,
       age: editObj.age,
       isActive: true,
       hobby: editObj.hobby
     };
+
+    console.log("editExistRow", editExistRow);
 
     const newUpdatedRowList = updateByObjectId(listOfRows, editExistRow);
 

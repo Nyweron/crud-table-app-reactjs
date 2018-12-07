@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal } from "../modal/Modal";
-import { PersonForm } from "./PersonForm";
+import PersonForm from "./PersonForm";
 
 class TableAdd extends Component {
   constructor(props) {
@@ -45,10 +45,15 @@ class TableAdd extends Component {
   }
 
   render() {
+    if (this.state.show === false) {
+      console.log("ADD TableAdd");
+      return null;
+    }
+
     return (
       <main>
         <Modal show={this.state.show}>
-          <PersonForm handleChange={this.handleChange} />
+          <PersonForm handleChange={this.handleChange} isEdit={false} />
           <button onClick={this.submitAddForm}>Save row</button>
           <button onClick={this.hideModal}>Close</button>
         </Modal>

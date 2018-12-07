@@ -1,18 +1,19 @@
 import React, { Component } from "react";
 import { Modal } from "../modal/Modal";
-import { PersonForm } from "./PersonForm";
+import PersonForm from "./PersonForm";
 
 class TableEdit extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      isEdit: false,
       show: false,
       firstName: "",
       lastName: "",
       age: 0,
       hobby: "",
-      idEdit: props.rowId
+      id: props.row.id
     };
   }
 
@@ -28,10 +29,9 @@ class TableEdit extends Component {
     this.showModal();
   };
 
-  submitEditForm = () => {
+  submitEditForm = data => {
     this.hideModal();
-    console.log("submitEditForm");
-    this.props.handleEdit(this.state);
+    this.props.handleEdit(data);
   };
 
   handleChange = event => {
@@ -40,12 +40,23 @@ class TableEdit extends Component {
   };
 
   render() {
+    if (this.state.show === false) {
+      return (
+        <a href="/#" onClick={this.editForm}>
+          edit
+        </a>
+      );
+    }
+
     return (
       <main>
         <Modal show={this.state.show}>
-          <PersonForm handleChange={this.handleChange} />
-          <button onClick={this.submitEditForm}>Save editing row</button>
-          <button onClick={this.hideModal}>Close</button>
+          <PersonForm
+            submitEditForm={this.submitEditForm}
+            hideModal={this.hideModal}
+            isEdit={true}
+            data={this.props.row}
+          />
         </Modal>
 
         <a href="/#" onClick={this.editForm}>
