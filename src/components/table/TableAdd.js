@@ -48,9 +48,13 @@ class TableAdd extends Component {
     return (
       <main>
         <Modal show={this.state.show}>
-          <PersonForm handleChange={this.handleChange} isEdit={false} />
-          <button onClick={this.submitAddForm}>Save row</button>
-          <button onClick={this.hideModal}>Close</button>
+          <PersonForm
+            handleChange={this.handleChange}
+            isEdit={false}
+            submitAddForm={this.submitAddForm}
+            hideModal={this.hideModal}
+            data={this.props.row}
+          />
         </Modal>
       </main>
     );

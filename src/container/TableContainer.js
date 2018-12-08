@@ -38,6 +38,8 @@ class TableContainer extends Component {
 
   handleSubmitAddRow = addObj => {
     if (
+      addObj === undefined ||
+      addObj === null ||
       addObj.firstName === null ||
       addObj.firstName === undefined ||
       addObj.firstName === ""
@@ -52,6 +54,7 @@ class TableContainer extends Component {
       sortedIds.push("");
     }
     const newId = generateNewId(sortedIds);
+
     const newPerson = {
       id: newId,
       firstName: addObj.firstName,
@@ -67,6 +70,10 @@ class TableContainer extends Component {
         rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
       })
     );
+
+    for (var key in addObj) {
+      delete addObj[key];
+    }
   };
 
   handleChange = event => {

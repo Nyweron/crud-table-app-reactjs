@@ -20,6 +20,11 @@ class PersonForm extends Component {
     this.props.submitEditForm(this.state);
   };
 
+  saveAdd = () => {
+    this.props.hideModal();
+    this.props.submitAddForm();
+  };
+
   render() {
     let edit = () => (
       <div className="modal-body">
@@ -107,12 +112,12 @@ class PersonForm extends Component {
             </div>
           </div>
         </form>
-        <button onClick={this.saveEdit}>Save editing row</button>
+        <button onClick={this.saveEdit}>Save editing row7</button>
         <button onClick={this.props.hideModal}>Close7</button>
       </div>
     );
 
-    const add = () => (
+    let add = () => (
       <div className="modal-body">
         <form>
           <div className="form-group">
@@ -198,6 +203,8 @@ class PersonForm extends Component {
             </div>
           </div>
         </form>
+        <button onClick={this.saveAdd}>Save row</button>
+        <button onClick={this.props.hideModal}>Close</button>
       </div>
     );
 
