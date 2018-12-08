@@ -7,10 +7,6 @@ class TableAdd extends Component {
     super(props);
 
     this.state = {
-      firstName: "",
-      lastName: "",
-      age: 0,
-      hobby: "",
       show: false
     };
   }
@@ -46,7 +42,6 @@ class TableAdd extends Component {
 
   render() {
     if (this.state.show === false) {
-      console.log("ADD TableAdd");
       return null;
     }
 

@@ -9,10 +9,6 @@ class TableEdit extends Component {
     this.state = {
       isEdit: false,
       show: false,
-      firstName: "",
-      lastName: "",
-      age: 0,
-      hobby: "",
       id: props.row.id
     };
   }
