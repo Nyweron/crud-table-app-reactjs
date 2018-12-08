@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 import { Modal } from "../modal/Modal";
-import { PersonForm } from "./PersonForm";
+import PersonForm from "./PersonForm";
 
 class TableAdd extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      firstName: "",
-      lastName: "",
-      age: 0,
-      hobby: "",
       show: false
     };
   }
@@ -45,10 +41,14 @@ class TableAdd extends Component {
   }
 
   render() {
+    if (this.state.show === false) {
+      return null;
+    }
+
     return (
       <main>
         <Modal show={this.state.show}>
-          <PersonForm handleChange={this.handleChange} />
+          <PersonForm handleChange={this.handleChange} isEdit={false} />
           <button onClick={this.submitAddForm}>Save row</button>
           <button onClick={this.hideModal}>Close</button>
         </Modal>

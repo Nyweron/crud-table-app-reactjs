@@ -97,7 +97,7 @@ class TableContainer extends Component {
     let listOfRows = this.state.rowsFromDbJson;
 
     const editExistRow = {
-      id: editObj.idEdit,
+      id: editObj.id,
       firstName: editObj.firstName,
       lastName: editObj.lastName,
       age: editObj.age,

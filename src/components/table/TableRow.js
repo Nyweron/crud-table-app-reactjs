@@ -21,7 +21,7 @@ export const TableRow = props => {
             </a>
           </td>
           <td className="edit-item">
-            <TableEdit rowId={row.id} handleEdit={props.handleEdit} />
+            <TableEdit row={row} handleEdit={props.handleEdit} />
           </td>
         </tr>
       );
