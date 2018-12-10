@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { TableListRows } from "../components/table/TableListRows";
 import TableAdd from "../components/table/TableAdd";
+
 import {
   getAll,
   getKeyFromJson,
@@ -15,6 +16,7 @@ import {
   sortIds,
   generateNewId
 } from "../lib/personHelpers";
+import Pagination from "../components/pagination/Pagination";
 
 class TableContainer extends Component {
   state = {
@@ -186,6 +188,8 @@ class TableContainer extends Component {
             handleRemove={this.handleRemove}
             handleEdit={this.handleEdit}
           />
+
+          <Pagination rows={displayTable} />
           {this.state.message && (
             <span className="success">{this.state.message}</span>
           )}
