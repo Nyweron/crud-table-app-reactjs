@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { TableListRows } from "../components/table/TableListRows";
 import TableAdd from "../components/table/TableAdd";
-
+import Pagination from "../components/pagination/Pagination";
 import {
   getAll,
   getKeyFromJson,
@@ -16,7 +16,6 @@ import {
   sortIds,
   generateNewId
 } from "../lib/personHelpers";
-import Pagination from "../components/pagination/Pagination";
 
 class TableContainer extends Component {
   state = {
@@ -25,7 +24,10 @@ class TableContainer extends Component {
     sort: true,
     columnName: "",
     previousColumnName: "",
-    add: false
+    add: false,
+    currentCountries: [],
+    currentPage: 1,
+    totalPages: 83
   };
 
   componentDidMount() {
@@ -156,13 +158,29 @@ class TableContainer extends Component {
     this.setState({ add: !this.state.add });
   };
 
+  onPageChanged = data => {
+    const { rowsFromDbJson } = this.state;
+    const { currentPage, pageLimit } = data;
+
+    const offset = (currentPage - 1) * pageLimit;
+    const currentCountries = rowsFromDbJson.slice(offset, offset + pageLimit);
+
+    this.setState({ currentPage, currentCountries, rowsFromDbJson });
+  };
+
   render() {
     const displayTable = filterTable(
       this.state.keysFromDbJson,
-      this.state.rowsFromDbJson,
+      this.state.currentCountries,
       this.state.columnName,
       this.state.sort
     );
+
+    const { currentCountries, currentPage, totalPages } = this.state;
+
+    const totalCountries = this.state.rowsFromDbJson.length;
+
+    if (totalCountries === 0) return null;
 
     return (
       <div className="container">
@@ -188,12 +206,23 @@ class TableContainer extends Component {
             handleRemove={this.handleRemove}
             handleEdit={this.handleEdit}
           />
-
-          <Pagination rows={displayTable} />
-
           {this.state.message && (
             <span className="success">{this.state.message}</span>
           )}
+        </div>
+        <div className="container mb-5">
+          <div className="row d-flex flex-row py-5">
+            <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between">
+              <div className="d-flex flex-row py-4 align-items-center">
+                <Pagination
+                  totalRecords={totalCountries}
+                  pageLimit={3}
+                  pageNeighbours={5}
+                  onPageChanged={this.onPageChanged}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
