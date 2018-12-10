@@ -190,6 +190,7 @@ class TableContainer extends Component {
           />
 
           <Pagination rows={displayTable} />
+
           {this.state.message && (
             <span className="success">{this.state.message}</span>
           )}

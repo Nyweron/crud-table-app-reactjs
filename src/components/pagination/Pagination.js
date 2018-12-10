@@ -8,7 +8,8 @@ class Pagination extends React.Component {
     this.state = {
       todos: ["a", "b", "c", "d", "e", "f", "g"],
       currentPage: 1,
-      todosPerPage: 3
+      todosPerPage: 3,
+      rows: props.rows
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -17,6 +18,13 @@ class Pagination extends React.Component {
     this.setState({
       currentPage: Number(event.target.id)
     });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.rows !== this.state.todos) {
+      console.log("nextProps.rows3", nextProps.rows);
+      this.setState({ todos: nextProps.rows });
+    }
   }
 
   render() {
@@ -28,7 +36,7 @@ class Pagination extends React.Component {
     const currentTodos = todos.slice(indexOfFirstTodo, indexOfLastTodo);
 
     const renderTodos = currentTodos.map((todo, index) => {
-      return <li key={index}>{todo}</li>;
+      return <li key={index}>{todo.id}</li>;
     });
 
     // Logic for displaying page numbers
