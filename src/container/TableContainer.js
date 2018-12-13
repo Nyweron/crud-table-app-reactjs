@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { TableListRows } from "../components/table/TableListRows";
 import TableAdd from "../components/table/TableAdd";
+import Pagination from "../components/pagination/Pagination";
 import {
   getAll,
   getKeyFromJson,
@@ -23,7 +24,9 @@ class TableContainer extends Component {
     sort: true,
     columnName: "",
     previousColumnName: "",
-    add: false
+    add: false,
+    currentRows: [],
+    currentPage: 1
   };
 
   componentDidMount() {
@@ -154,13 +157,33 @@ class TableContainer extends Component {
     this.setState({ add: !this.state.add });
   };
 
+  onPageChanged = data => {
+    console.log("data", data);
+    const { rowsFromDbJson } = this.state;
+    const { currentPage, pageLimit } = data;
+
+    const offset = (currentPage - 1) * pageLimit;
+    const currentRows = this.state.rowsFromDbJson.slice(
+      offset,
+      offset + pageLimit
+    );
+
+    this.setState({ currentPage, currentRows, rowsFromDbJson });
+  };
+
   render() {
     const displayTable = filterTable(
       this.state.keysFromDbJson,
-      this.state.rowsFromDbJson,
+      this.state.currentRows,
       this.state.columnName,
       this.state.sort
     );
+
+    const totalRows = this.state.rowsFromDbJson.length;
+
+    if (totalRows === 0) {
+      return null;
+    }
 
     return (
       <div className="container">
@@ -189,6 +212,20 @@ class TableContainer extends Component {
           {this.state.message && (
             <span className="success">{this.state.message}</span>
           )}
+        </div>
+        <div className="container mb-5">
+          <div className="row d-flex flex-row py-5">
+            <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between">
+              <div className="d-flex flex-row py-4 align-items-center">
+                <Pagination
+                  totalRecords={totalRows}
+                  pageLimit={4}
+                  pageNeighbours={5}
+                  onPageChanged={this.onPageChanged}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
