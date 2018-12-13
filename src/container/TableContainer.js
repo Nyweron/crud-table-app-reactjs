@@ -25,9 +25,8 @@ class TableContainer extends Component {
     columnName: "",
     previousColumnName: "",
     add: false,
-    currentCountries: [],
-    currentPage: 1,
-    totalPages: 83
+    currentRows: [],
+    currentPage: 1
   };
 
   componentDidMount() {
@@ -159,28 +158,32 @@ class TableContainer extends Component {
   };
 
   onPageChanged = data => {
+    console.log("data", data);
     const { rowsFromDbJson } = this.state;
     const { currentPage, pageLimit } = data;
 
     const offset = (currentPage - 1) * pageLimit;
-    const currentCountries = rowsFromDbJson.slice(offset, offset + pageLimit);
+    const currentRows = this.state.rowsFromDbJson.slice(
+      offset,
+      offset + pageLimit
+    );
 
-    this.setState({ currentPage, currentCountries, rowsFromDbJson });
+    this.setState({ currentPage, currentRows, rowsFromDbJson });
   };
 
   render() {
     const displayTable = filterTable(
       this.state.keysFromDbJson,
-      this.state.currentCountries,
+      this.state.currentRows,
       this.state.columnName,
       this.state.sort
     );
 
-    const { currentCountries, currentPage, totalPages } = this.state;
+    const totalRows = this.state.rowsFromDbJson.length;
 
-    const totalCountries = this.state.rowsFromDbJson.length;
-
-    if (totalCountries === 0) return null;
+    if (totalRows === 0) {
+      return null;
+    }
 
     return (
       <div className="container">
@@ -215,8 +218,8 @@ class TableContainer extends Component {
             <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between">
               <div className="d-flex flex-row py-4 align-items-center">
                 <Pagination
-                  totalRecords={totalCountries}
-                  pageLimit={3}
+                  totalRecords={totalRows}
+                  pageLimit={4}
                   pageNeighbours={5}
                   onPageChanged={this.onPageChanged}
                 />
