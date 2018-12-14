@@ -35,7 +35,7 @@ export const TableRow = props => {
   return rowsToReturn;
 };
 
-// TableRow.propTypes = {
-//   rows: PropTypes.array.isRequired,
-//   keys: PropTypes.array.isRequired
-// };
+TableRow.propTypes = {
+  rows: PropTypes.array.isRequired,
+  keys: PropTypes.array.isRequired
+};

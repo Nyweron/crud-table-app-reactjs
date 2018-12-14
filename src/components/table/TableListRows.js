@@ -21,7 +21,7 @@ export const TableListRows = props => {
   );
 };
 
-// TableListRows.propTypes = {
-//   rows: PropTypes.array.isRequired,
-//   keys: PropTypes.array.isRequired
-// };
+TableListRows.propTypes = {
+  rows: PropTypes.array.isRequired,
+  keys: PropTypes.array.isRequired
+};
