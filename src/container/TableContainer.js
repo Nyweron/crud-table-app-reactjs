@@ -26,7 +26,9 @@ class TableContainer extends Component {
     previousColumnName: "",
     add: false,
     currentRows: [],
-    currentPage: 1
+    currentPage: 1,
+    pageLimit: 4,
+    pageNeighbours: 5
   };
 
   componentDidMount() {
@@ -77,6 +79,11 @@ class TableContainer extends Component {
     for (var key in addObj) {
       delete addObj[key];
     }
+    // let data = {};
+    // data.currentPage = this.state.currentPage;
+    // data.totalPages = this.state.totalPages;
+    // data.pageLimit = this.state.pageLimit;
+    // this.onPageChanged(data);
   };
 
   handleChange = event => {
@@ -159,6 +166,21 @@ class TableContainer extends Component {
 
   onPageChanged = data => {
     console.log("data", data);
+    const offset = (data.currentPage - 1) * data.pageLimit;
+    const currentRows = this.state.rowsFromDbJson.slice(
+      offset,
+      offset + data.pageLimit
+    );
+
+    this.setState({
+      currentPage: data.currentPage,
+      rowsFromDbJson: this.state.rowsFromDbJson,
+      currentRows
+    });
+  };
+
+  onPageChanged2 = data => {
+    console.log("data2", data);
     const { rowsFromDbJson } = this.state;
     const { currentPage, pageLimit } = data;
 
@@ -179,9 +201,7 @@ class TableContainer extends Component {
       this.state.sort
     );
 
-    const totalRows = this.state.rowsFromDbJson.length;
-
-    if (totalRows === 0) {
+    if (this.state.rowsFromDbJson.length === 0) {
       return null;
     }
 
@@ -218,9 +238,9 @@ class TableContainer extends Component {
             <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between">
               <div className="d-flex flex-row py-4 align-items-center">
                 <Pagination
-                  totalRecords={totalRows}
-                  pageLimit={4}
-                  pageNeighbours={5}
+                  totalRecords={this.state.rowsFromDbJson.length}
+                  pageLimit={this.state.pageLimit}
+                  pageNeighbours={this.state.pageNeighbours}
                   onPageChanged={this.onPageChanged}
                 />
               </div>
