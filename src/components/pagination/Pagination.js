@@ -16,7 +16,7 @@ const range = (from, to, step = 1) => {
   return range;
 };
 
-class Pagination2 extends Component {
+class Pagination extends Component {
   constructor(props) {
     super(props);
     const { totalRecords = null, pageLimit = 30, pageNeighbours = 0 } = props;
@@ -180,11 +180,11 @@ class Pagination2 extends Component {
   }
 }
 
-Pagination2.propTypes = {
+Pagination.propTypes = {
   totalRecords: PropTypes.number.isRequired,
   pageLimit: PropTypes.number,
   pageNeighbours: PropTypes.number,
   onPageChanged: PropTypes.func
 };
 
-export default Pagination2;
+export default Pagination;
