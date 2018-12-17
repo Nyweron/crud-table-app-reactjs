@@ -236,17 +236,13 @@ class TableContainer extends Component {
           )}
         </div>
         <div className="container mb-5">
-          <div className="row d-flex flex-row py-5">
-            <div className="w-100 px-4 py-5 d-flex flex-row flex-wrap align-items-center justify-content-between">
-              <div className="d-flex flex-row py-4 align-items-center">
-                <Pagination
-                  totalRecords={this.state.rowsFromDbJson.length}
-                  pageLimit={this.state.pageLimit}
-                  pageNeighbours={this.state.pageNeighbours}
-                  onPageChanged={this.onPageChanged}
-                />
-              </div>
-            </div>
+          <div className="d-flex flex-row py-4 align-items-center justify-content-center">
+            <Pagination
+              totalRecords={this.state.rowsFromDbJson.length}
+              pageLimit={this.state.pageLimit}
+              pageNeighbours={this.state.pageNeighbours}
+              onPageChanged={this.onPageChanged}
+            />
           </div>
         </div>
       </div>
