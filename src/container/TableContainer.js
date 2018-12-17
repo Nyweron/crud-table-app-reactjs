@@ -71,19 +71,19 @@ class TableContainer extends Component {
 
     createPerson(newPerson).then(
       () => this.showTempMessage("person created"),
-      this.setState({
-        rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
-      })
+      this.setState(
+        {
+          rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
+        },
+        () => {
+          console.log("total3", this.state.rowsFromDbJson.length);
+        }
+      )
     );
 
     for (var key in addObj) {
       delete addObj[key];
     }
-    // let data = {};
-    // data.currentPage = this.state.currentPage;
-    // data.totalPages = this.state.totalPages;
-    // data.pageLimit = this.state.pageLimit;
-    // this.onPageChanged(data);
   };
 
   handleChange = event => {
@@ -103,10 +103,17 @@ class TableContainer extends Component {
   handleRemove = id => {
     let listOfRows = this.state.rowsFromDbJson;
     const newListWithoutRemovedItem = removeRowById(listOfRows, id);
-
+    console.log("newListWithoutRemovedItem", newListWithoutRemovedItem);
+    const data = {};
     deleteRow(id).then(
       () => this.showTempMessage("row deleted"),
-      this.setState({ rowsFromDbJson: newListWithoutRemovedItem })
+      this.setState({ rowsFromDbJson: newListWithoutRemovedItem }, () => {
+        data.totalRecords = this.state.rowsFromDbJson.length;
+        data.pageLimit = this.state.pageLimit;
+        data.pageNeighbours = this.state.pageNeighbours;
+        data.currentPage = this.state.currentPage;
+        this.onPageChanged(data);
+      })
     );
   };
 
@@ -179,31 +186,17 @@ class TableContainer extends Component {
     });
   };
 
-  onPageChanged2 = data => {
-    console.log("data2", data);
-    const { rowsFromDbJson } = this.state;
-    const { currentPage, pageLimit } = data;
-
-    const offset = (currentPage - 1) * pageLimit;
-    const currentRows = this.state.rowsFromDbJson.slice(
-      offset,
-      offset + pageLimit
-    );
-
-    this.setState({ currentPage, currentRows, rowsFromDbJson });
-  };
-
   render() {
+    if (this.state.rowsFromDbJson.length === 0) {
+      return null;
+    }
+
     const displayTable = filterTable(
       this.state.keysFromDbJson,
       this.state.currentRows,
       this.state.columnName,
       this.state.sort
     );
-
-    if (this.state.rowsFromDbJson.length === 0) {
-      return null;
-    }
 
     return (
       <div className="container">

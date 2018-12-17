@@ -69,6 +69,8 @@ class Pagination extends Component {
   };
 
   fetchPageNumbers = () => {
+    this.totalPages = Math.ceil(this.props.totalRecords / this.pageLimit);
+    console.log("totalPages", this.totalPages);
     const totalPages = this.totalPages;
     const currentPage = this.state.currentPage;
     const pageNeighbours = this.pageNeighbours;
