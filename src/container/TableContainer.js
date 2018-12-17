@@ -27,7 +27,7 @@ class TableContainer extends Component {
     add: false,
     currentRows: [],
     currentPage: 1,
-    pageLimit: 4,
+    pageLimit: 2,
     pageNeighbours: 5
   };
 
@@ -76,7 +76,7 @@ class TableContainer extends Component {
           rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
         },
         () => {
-          console.log("total3", this.state.rowsFromDbJson.length);
+          this.invokePaginationOnPageChanged();
         }
       )
     );
@@ -103,18 +103,22 @@ class TableContainer extends Component {
   handleRemove = id => {
     let listOfRows = this.state.rowsFromDbJson;
     const newListWithoutRemovedItem = removeRowById(listOfRows, id);
-    console.log("newListWithoutRemovedItem", newListWithoutRemovedItem);
-    const data = {};
+
     deleteRow(id).then(
       () => this.showTempMessage("row deleted"),
       this.setState({ rowsFromDbJson: newListWithoutRemovedItem }, () => {
-        data.totalRecords = this.state.rowsFromDbJson.length;
-        data.pageLimit = this.state.pageLimit;
-        data.pageNeighbours = this.state.pageNeighbours;
-        data.currentPage = this.state.currentPage;
-        this.onPageChanged(data);
+        this.invokePaginationOnPageChanged();
       })
     );
+  };
+
+  invokePaginationOnPageChanged = () => {
+    const data = {};
+    data.totalRecords = this.state.rowsFromDbJson.length;
+    data.pageLimit = this.state.pageLimit;
+    data.pageNeighbours = this.state.pageNeighbours;
+    data.currentPage = this.state.currentPage;
+    this.onPageChanged(data);
   };
 
   handleEdit = editObj => {
@@ -133,9 +137,14 @@ class TableContainer extends Component {
 
     updateRow(editExistRow).then(
       () => this.showTempMessage("row updated"),
-      this.setState({
-        rowsFromDbJson: newUpdatedRowList
-      })
+      this.setState(
+        {
+          rowsFromDbJson: newUpdatedRowList
+        },
+        () => {
+          this.invokePaginationOnPageChanged();
+        }
+      )
     );
   };
 
