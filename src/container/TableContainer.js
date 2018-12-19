@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { TableListRows } from "../components/table/TableListRows";
 import TableAdd from "../components/table/TableAdd";
+import Pagination from "../components/pagination/Pagination";
 import {
   getAll,
   getKeyFromJson,
@@ -23,7 +24,11 @@ class TableContainer extends Component {
     sort: true,
     columnName: "",
     previousColumnName: "",
-    add: false
+    add: false,
+    currentRows: [],
+    currentPage: 1,
+    pageLimit: 2,
+    pageNeighbours: 5
   };
 
   componentDidMount() {
@@ -66,9 +71,14 @@ class TableContainer extends Component {
 
     createPerson(newPerson).then(
       () => this.showTempMessage("person created"),
-      this.setState({
-        rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
-      })
+      this.setState(
+        {
+          rowsFromDbJson: [...this.state.rowsFromDbJson, newPerson]
+        },
+        () => {
+          this.invokePaginationOnPageChanged();
+        }
+      )
     );
 
     for (var key in addObj) {
@@ -96,8 +106,19 @@ class TableContainer extends Component {
 
     deleteRow(id).then(
       () => this.showTempMessage("row deleted"),
-      this.setState({ rowsFromDbJson: newListWithoutRemovedItem })
+      this.setState({ rowsFromDbJson: newListWithoutRemovedItem }, () => {
+        this.invokePaginationOnPageChanged();
+      })
     );
+  };
+
+  invokePaginationOnPageChanged = () => {
+    const data = {};
+    data.totalRecords = this.state.rowsFromDbJson.length;
+    data.pageLimit = this.state.pageLimit;
+    data.pageNeighbours = this.state.pageNeighbours;
+    data.currentPage = this.state.currentPage;
+    this.onPageChanged(data);
   };
 
   handleEdit = editObj => {
@@ -116,9 +137,14 @@ class TableContainer extends Component {
 
     updateRow(editExistRow).then(
       () => this.showTempMessage("row updated"),
-      this.setState({
-        rowsFromDbJson: newUpdatedRowList
-      })
+      this.setState(
+        {
+          rowsFromDbJson: newUpdatedRowList
+        },
+        () => {
+          this.invokePaginationOnPageChanged();
+        }
+      )
     );
   };
 
@@ -154,10 +180,29 @@ class TableContainer extends Component {
     this.setState({ add: !this.state.add });
   };
 
+  onPageChanged = data => {
+    console.log("data", data);
+    const offset = (data.currentPage - 1) * data.pageLimit;
+    const currentRows = this.state.rowsFromDbJson.slice(
+      offset,
+      offset + data.pageLimit
+    );
+
+    this.setState({
+      currentPage: data.currentPage,
+      rowsFromDbJson: this.state.rowsFromDbJson,
+      currentRows
+    });
+  };
+
   render() {
+    if (this.state.rowsFromDbJson.length === 0) {
+      return null;
+    }
+
     const displayTable = filterTable(
       this.state.keysFromDbJson,
-      this.state.rowsFromDbJson,
+      this.state.currentRows,
       this.state.columnName,
       this.state.sort
     );
@@ -189,6 +234,16 @@ class TableContainer extends Component {
           {this.state.message && (
             <span className="success">{this.state.message}</span>
           )}
+        </div>
+        <div className="container mb-5">
+          <div className="d-flex flex-row py-4 align-items-center justify-content-center">
+            <Pagination
+              totalRecords={this.state.rowsFromDbJson.length}
+              pageLimit={this.state.pageLimit}
+              pageNeighbours={this.state.pageNeighbours}
+              onPageChanged={this.onPageChanged}
+            />
+          </div>
         </div>
       </div>
     );

@@ -3,12 +3,16 @@ import PropTypes from "prop-types";
 import TableEdit from "./TableEdit";
 
 export const TableRow = props => {
+  //console.log("props", props);
+  if (props.rows === undefined) {
+    return null;
+  }
   let rowsToReturn = props.rows.map(row => {
     if (row.id === 0) {
       return <tr style={{ display: "none" }} key={row.id} />;
     } else {
       return (
-        <tr key={row.id}>
+        <tr style={{ height: "115px" }} key={row.id}>
           {props.keys.map((key, i) => {
             if (row[key] !== undefined) {
               return <td key={row.id + "-" + i}>{row[key].toString()}</td>;
