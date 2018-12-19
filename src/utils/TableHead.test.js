@@ -11,9 +11,8 @@ function sortColumn(item) {
   return item;
 }
 
-describe("Todos", () => {
-  it("finds title", () => {
-    console.log("keys", keys);
+describe("TableHead", () => {
+  it("find first key from keys", () => {
     const { getByText, getByTestId, container } = render(
       <table>
         <thead>
@@ -22,7 +21,7 @@ describe("Todos", () => {
         <tbody />
       </table>
     );
-    const elem = getByTestId("item");
+    const elem = getByTestId("header 1");
     expect(elem.innerHTML).toBe("header 1");
   });
 });
