@@ -1,22 +1,19 @@
-// Todos.test.js
-
-import { render, Simulate, wait } from "react-testing-library";
+import { render, Simulate, wait, cleanup } from "react-testing-library";
 import React from "react";
 import "jest-dom/extend-expect";
 import { TableHead } from "../components/table/TableHead";
 
-const keys = ["header 1", "header 2", "header 3", "header 4"];
+// automatically unmount and cleanup DOM after the test is finished.
+afterEach(cleanup);
 
-function sortColumn(item) {
-  return item;
-}
+const keys = ["header 1", "header 2", "header 3", "header 4"];
 
 describe("TableHead", () => {
   it("find first key from keys", () => {
     const { getByText, getByTestId, container } = render(
       <table>
         <thead>
-          <TableHead sortColumn={sortColumn} keys={keys} />
+          <TableHead keys={keys} />
         </thead>
         <tbody />
       </table>
