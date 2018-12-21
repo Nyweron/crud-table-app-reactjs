@@ -1,10 +1,4 @@
-import {
-  render,
-  Simulate,
-  wait,
-  cleanup,
-  fireEvent
-} from "react-testing-library";
+import { render, cleanup, fireEvent } from "react-testing-library";
 import React from "react";
 import "jest-dom/extend-expect";
 import { TableRow } from "../components/table/TableRow";
@@ -35,7 +29,7 @@ const rows = [
 
 describe("TableRow", () => {
   it("find id=2 from rows", () => {
-    const { getByText, getByTestId, container } = render(
+    const { getByTestId } = render(
       <table>
         <thead>
           <TableRow keys={keys} rows={rows} />

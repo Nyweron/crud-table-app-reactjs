@@ -1,4 +1,4 @@
-import { render, Simulate, wait, cleanup } from "react-testing-library";
+import { render, cleanup } from "react-testing-library";
 import React from "react";
 import "jest-dom/extend-expect";
 import { TableHead } from "../components/table/TableHead";
@@ -10,7 +10,7 @@ const keys = ["header 1", "header 2", "header 3", "header 4"];
 
 describe("TableHead", () => {
   it("find first key from keys", () => {
-    const { getByText, getByTestId, container } = render(
+    const { getByTestId } = render(
       <table>
         <thead>
           <TableHead keys={keys} />
