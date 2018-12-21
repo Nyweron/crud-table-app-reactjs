@@ -1,4 +1,10 @@
-import { render, Simulate, wait, cleanup } from "react-testing-library";
+import {
+  render,
+  Simulate,
+  wait,
+  cleanup,
+  fireEvent
+} from "react-testing-library";
 import React from "react";
 import "jest-dom/extend-expect";
 import { TableRow } from "../components/table/TableRow";
@@ -42,5 +48,20 @@ describe("TableRow", () => {
     expect(elemRow.innerHTML).toBe("2");
     const elemRowFirstName = getByTestId("2-1");
     expect(elemRowFirstName.innerHTML).toBe("Jennings");
+  });
+
+  test("clicks handleRemove tag 'a' ", () => {
+    const handleRemove = jest.fn();
+    const { getByText } = render(
+      <table>
+        <thead>
+          <TableRow keys={keys} rows={rows} handleRemove={handleRemove} />
+        </thead>
+        <tbody />
+      </table>
+    );
+
+    fireEvent.click(getByText("X"));
+    expect(handleRemove).toHaveBeenCalledTimes(1);
   });
 });
