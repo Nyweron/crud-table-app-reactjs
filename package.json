@@ -22,6 +22,7 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.3",
+    "jest-dom": "^3.0.0",
     "json-server": "^0.14.0",
     "npm": "^6.4.1",
     "react": "^16.5.1",
@@ -37,7 +38,8 @@
   "devDependencies": {
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-prettier": "^3.0.0",
-    "prettier": "^1.14.3"
+    "prettier": "^1.14.3",
+    "react-testing-library": "^5.4.1"
   },
   "browserslist": [
     ">0.2%",

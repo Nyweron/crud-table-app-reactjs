@@ -9,7 +9,9 @@ export const TableHead = props => {
     <tr style={{ color: "blue", cursor: "default" }}>
       {props.keys.map(item => (
         <th key={item}>
-          <span onClick={() => props.sortColumn(item)}>{item}</span>
+          <span data-testid={item} onClick={() => props.sortColumn(item)}>
+            {item}
+          </span>
         </th>
       ))}
       <th>Remove</th>
