@@ -3,14 +3,6 @@ import { Modal } from "../modal/Modal";
 import PersonFormAdd from "./PersonFormAdd";
 
 class TableAdd extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      show: false
-    };
-  }
-
   showModal = () => {
     this.setState({ show: true });
   };
@@ -34,20 +26,14 @@ class TableAdd extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.show !== this.props.show) {
-      this.setState({ show: this.props.show });
-    }
-  }
-
   render() {
-    if (this.state.show === false) {
+    if (this.props.show === false) {
       return null;
     }
 
     return (
       <main>
-        <Modal show={this.state.show}>
+        <Modal show={this.props.show}>
           <PersonFormAdd
             handleChange={this.handleChange}
             submitAddForm={this.submitAddForm}
