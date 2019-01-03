@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Modal } from "../modal/Modal";
-import PersonForm from "./PersonForm";
+import PersonFormAdd from "./PersonFormAdd";
 
 class TableAdd extends Component {
   constructor(props) {
@@ -48,9 +48,8 @@ class TableAdd extends Component {
     return (
       <main>
         <Modal show={this.state.show}>
-          <PersonForm
+          <PersonFormAdd
             handleChange={this.handleChange}
-            isEdit={false}
             submitAddForm={this.submitAddForm}
             hideModal={this.hideModal}
             data={this.props.row}
