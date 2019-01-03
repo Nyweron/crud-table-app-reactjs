@@ -7,8 +7,7 @@ class TableEdit extends Component {
     super(props);
 
     this.state = {
-      show: false,
-      id: props.row.id
+      show: false
     };
   }
 
@@ -44,7 +43,7 @@ class TableEdit extends Component {
     }
 
     return (
-      <main>
+      <div>
         <Modal show={this.state.show}>
           <PersonFormEdit
             submitEditForm={this.submitEditForm}
@@ -56,7 +55,7 @@ class TableEdit extends Component {
         <a href="/#" onClick={this.editForm}>
           edit
         </a>
-      </main>
+      </div>
     );
   }
 }
