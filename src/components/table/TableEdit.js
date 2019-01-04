@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import { Modal } from "../modal/Modal";
-import PersonForm from "./PersonForm";
+import PersonFormEdit from "./PersonFormEdit";
 
 class TableEdit extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isEdit: false,
-      show: false,
-      id: props.row.id
+      show: false
     };
   }
 
@@ -45,12 +43,11 @@ class TableEdit extends Component {
     }
 
     return (
-      <main>
+      <div>
         <Modal show={this.state.show}>
-          <PersonForm
+          <PersonFormEdit
             submitEditForm={this.submitEditForm}
             hideModal={this.hideModal}
-            isEdit={true}
             data={this.props.row}
           />
         </Modal>
@@ -58,7 +55,7 @@ class TableEdit extends Component {
         <a href="/#" onClick={this.editForm}>
           edit
         </a>
-      </main>
+      </div>
     );
   }
 }

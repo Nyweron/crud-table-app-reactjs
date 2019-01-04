@@ -221,10 +221,15 @@ class TableContainer extends Component {
           handleChange={this.handleChange}
           negationAdd={this.negationAdd}
         />
+
         <div className="row">
           <TableListRows
             rows={displayTable}
-            keys={this.state.keysFromDbJson}
+            keys={
+              this.state.keysFromDbJson === null
+                ? null
+                : this.state.keysFromDbJson
+            }
             classCss="table table-striped table-bordered"
             handleChange={this.handleChange}
             sortColumn={this.sortColumn}
