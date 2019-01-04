@@ -27,7 +27,7 @@ class TableContainer extends Component {
     add: false,
     currentRows: [],
     currentPage: 1,
-    pageLimit: 2,
+    pageLimit: 5,
     pageNeighbours: 5
   };
 
@@ -213,6 +213,9 @@ class TableContainer extends Component {
           <button className="btn" onClick={this.negationAdd}>
             Add row
           </button>
+          {this.state.message && (
+            <span className="success">{this.state.message}</span>
+          )}
         </div>
 
         <TableAdd
@@ -236,9 +239,6 @@ class TableContainer extends Component {
             handleRemove={this.handleRemove}
             handleEdit={this.handleEdit}
           />
-          {this.state.message && (
-            <span className="success">{this.state.message}</span>
-          )}
         </div>
         <div className="container mb-5">
           <div className="d-flex flex-row py-4 align-items-center justify-content-center">
