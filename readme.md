@@ -10,3 +10,6 @@ npm start
 
 Test app:
 npm test
+
+You can see results on:
+https://nyweron.github.io/crud-table-app-reactjs/#/
