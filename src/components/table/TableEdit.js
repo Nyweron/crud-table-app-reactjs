@@ -36,7 +36,7 @@ class TableEdit extends Component {
   render() {
     if (this.state.show === false) {
       return (
-        <a href="/#" onClick={this.editForm}>
+        <a href="/crud-table-app-reactjs/#" onClick={this.editForm}>
           edit
         </a>
       );
@@ -52,7 +52,7 @@ class TableEdit extends Component {
           />
         </Modal>
 
-        <a href="/#" onClick={this.editForm}>
+        <a href="/crud-table-app-reactjs/#" onClick={this.editForm}>
           edit
         </a>
       </div>
