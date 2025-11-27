@@ -27,7 +27,7 @@
     "npm": "^6.4.1",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
-    "react-scripts": "^2.0.5"
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
